@@ -57,6 +57,6 @@ This Unity-based project recreates **Practice 2 (OpenGL)**, utilizing Unity's po
 - **Team Members:**
    - Ivan Cardona Ferrer (ivan.cardona@estudiants.urv.cat)
    - Xavier Vega Cuadros (xavivegacuadros@gmail.com)
-   - Neus Oller Matas (neus.oller@estudiants.urv.cat)
+   - Neus Oller Matas (neus.oller.m@gmail.com)
    - Said Trujillo de León (31ldts@gmail.com)
 - **Course Instructor:** Pep Santacruz (joseluis.santacruz@urv.cat)
