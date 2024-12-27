@@ -96,4 +96,16 @@ public class PlayerMovement : MonoBehaviour
         // Apliquem rotació suavitzada amb Lerp
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * lerpSpeed);
     }
+
+    /*public float detectionRange = 10f; // Radi del rang de detecció
+    public Color gizmoColor = Color.blue; // Color de la esfera
+
+    private void OnDrawGizmosSelected()
+    {
+        // Canviar el color del Gizmo
+        Gizmos.color = gizmoColor;
+
+        // Dibuixar una esfera a la posició de l'objecte amb el radi definit
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+    }*/
 }

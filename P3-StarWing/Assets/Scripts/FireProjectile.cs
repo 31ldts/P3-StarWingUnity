@@ -26,6 +26,6 @@ public class FireProjectile : MonoBehaviour
         {
             rb.linearVelocity = firePoint.forward * projectileSpeed;
         }
-        Destroy(projectile, 6.0f);
+        //Destroy(projectile, 6.0f);
     }
 }
