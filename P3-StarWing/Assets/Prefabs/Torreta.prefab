@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3733423714080776279}
   m_Layer: 0
   m_Name: Torreta
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  projectile: {fileID: 0}
+  projectilePrefab: {fileID: 2222728972578983871, guid: 635426815d233b34e8f6ba6ed2fbf8a2, type: 3}
   firePoint: {fileID: 999256338860491474}
   projectileSpeed: 10
   rotationSpeed: 10

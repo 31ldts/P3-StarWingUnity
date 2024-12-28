@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 1817249967736331531}
   - component: {fileID: 5875597704062003602}
   - component: {fileID: -21740755465313832}
+  - component: {fileID: 7085055362242749569}
+  - component: {fileID: 7922265967852863151}
   m_Layer: 0
   m_Name: Projectile_Prefab
   m_TagString: Untagged
@@ -28,13 +30,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2222728972578983871}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0.167, y: -0.603, z: 0.85}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!33 &3020353200081823310
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -133,8 +135,34 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7085055362242749569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2222728972578983871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b6e999dc1d54264e995cff0d5db1c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlayerProjectile: 0
+--- !u!114 &7922265967852863151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2222728972578983871}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8698179fbf0b0014e926a8e005c030f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifetime: 6
