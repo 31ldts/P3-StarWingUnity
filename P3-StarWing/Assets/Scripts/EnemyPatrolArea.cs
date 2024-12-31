@@ -13,14 +13,14 @@ public class EnemyPatrolArea : MonoBehaviour
     private void Start()
     {
         // Establir la direcció inicial de moviment (pot ser qualsevol direcció)
-        moveDirection = -Vector3.right; // Mou de l'esquerra a la dreta per exemple
+        moveDirection = Vector3.right; // Mou de l'esquerra a la dreta per exemple
         SetTargetPosition();
     }
 
     private void Update()
     {
         // Mou l'enemic en la direcció actual
-        transform.position += -moveDirection * speed * Time.deltaTime;
+        transform.position += moveDirection * speed * Time.deltaTime;
 
         // Comprovar si l'enemic ha arribat al final de l'àrea
         if (!IsWithinArea(transform.position))
