@@ -2,23 +2,29 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float movementSpeed = 4f;
+    public float movementSpeed = 8f;
     public float initialSpeed = 0f;
     public float acceleration = 3f;
     public float deceleration = 2f;
-    public float maxSpeed = 10f;
+    public float maxSpeed = 20f;
     public float minSpeed = 2.0f;
 
     public float rotationSpeed = 10f;
     public float lerpSpeed = 2f;
 
+    public ParticleSystem accelerationParticles;
     private Quaternion targetRotation;
+
+    public ProjectileShooter projectileShooter;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         targetRotation = transform.rotation; // Inicialitza la rotació objectiu
         initialSpeed = movementSpeed; // Guardem la velocitat inicial
+
+        projectileShooter = GetComponent<ProjectileShooter>();
+        //accelerationParticles = GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -32,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
         {
             movementSpeed += acceleration * Time.deltaTime; // Augmenta la velocitat
             movementSpeed = Mathf.Clamp(movementSpeed, minSpeed, maxSpeed); // Limita la velocitat dins dels marges
+
+            accelerationParticles.Play(); // Iniciem el sistema de partícules que representa l'acceleració
         }
 
         // Frenada/desacceleració
@@ -51,7 +59,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 movementSpeed += 1f * Time.deltaTime;
             }
+
+            accelerationParticles.Stop();
         }
+
 
 
         // Moviment cap a l'esquerra/dreta (rotació horitzontal - yaw)
@@ -59,13 +70,13 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.A)) // Gir a l'esquerra (yaw)
         {
             rotateHorizontal = -1;
-            transform.Translate(Vector3.left * movementSpeed * 0.1f * Time.deltaTime); // lleuger desplaçament cap a l'esquerra
+            transform.Translate(Vector3.left * movementSpeed * 0.25f * Time.deltaTime); // lleuger desplaçament cap a l'esquerra
             targetRotation *= Quaternion.Euler(0, 0, rotationSpeed * 0.5f * Time.deltaTime); // lleugera rotació roll per donar efecte
         }
         if (Input.GetKey(KeyCode.D)) // Gir a la dreta (yaw)
         {
             rotateHorizontal = 1;
-            transform.Translate(Vector3.right * movementSpeed * 0.1f * Time.deltaTime); // lleuger desplaçament cap a la dreta
+            transform.Translate(Vector3.right * movementSpeed * 0.25f * Time.deltaTime); // lleuger desplaçament cap a la dreta
             targetRotation *= Quaternion.Euler(0, 0, -rotationSpeed * 0.5f * Time.deltaTime); // lleugera rotació roll per donar efecte
         }
         if (rotateHorizontal != 0)
@@ -95,6 +106,14 @@ public class PlayerMovement : MonoBehaviour
 
         // Apliquem rotació suavitzada amb Lerp
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * lerpSpeed);
+
+
+        // DISPAR DEL PROJECTIL - BOTÓ ESQUERRA DEL RATOLÍ
+
+        if (Input.GetMouseButtonDown(0)) 
+        {
+            projectileShooter.ShootProjectile(true);
+        }
     }
 
     /*public float detectionRange = 10f; // Radi del rang de detecció

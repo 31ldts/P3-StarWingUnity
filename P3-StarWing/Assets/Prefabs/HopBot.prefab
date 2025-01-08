@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 375159817671961356}
   - component: {fileID: 3375474465127950178}
   - component: {fileID: 8747058967983477218}
+  - component: {fileID: 8880797685885110386}
   m_Layer: 0
   m_Name: HopBot
   m_TagString: Untagged
@@ -47,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aa145fc4781f0349a76d30c89e0eb60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  areaCenter: {x: 0, y: 4, z: 24}
+  areaCenter: {x: 0, y: 4, z: 50}
   areaSize: {x: 35, y: 10, z: 10}
   speed: 4
   rotationSpeed: 5
@@ -99,6 +100,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8880797685885110386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8706349288121101180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba5b942cc2f43884e86307874ee3a6a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionEffect: {fileID: 7660389631256298559, guid: a0453466cf5c81145b425907dfb03fe4, type: 3}
+  maxHealth: 100
+  currentHealth: 100
 --- !u!1001 &4578733436086904120
 PrefabInstance:
   m_ObjectHideFlags: 0

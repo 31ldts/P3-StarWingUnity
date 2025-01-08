@@ -4,6 +4,8 @@ public class Projectile : MonoBehaviour
 {
     public bool isPlayerProjectile;
 
+    public float damageAmount = 10f; // Cantidad de daño que causa el impacto de un proyectil
+
     /*private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject.name);
@@ -31,10 +33,19 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Opcional: Comprovar el tipus de col·lisió
-        Debug.Log($"Projectil ha col·lisionat amb: {collision.gameObject.name}");
+        // Opcional: Comprobamos contra qué ha colisionado el proyectil
+        //Debug.Log($"Projectil ha col·lisionat amb: {collision.gameObject.name}");
 
-        // Destruir el projectil quan col·lisiona
+        // Obtiene el componente LifeComponent del objeto con el que colisionamos
+        LifeComponent life = collision.gameObject.GetComponent<LifeComponent>();
+
+        // Si el objeto tiene un LifeComponent, aplica el daño
+        if ( life != null )
+        {
+            life.doDamage(-damageAmount);
+        }
+
+        // Destruimos el proyectil en el momento de la colisión
         Destroy(gameObject);
     }
 }
