@@ -26,6 +26,9 @@ public class RawImageManager : MonoBehaviour
     // Lista de texturas asociadas a cada número
     public List<Texture> shipTextures; 
 
+    private int levelIndex;
+    private string shipName;
+
     void Start()
     {
         // Deshabilitar el botón al inicio
@@ -65,6 +68,7 @@ public class RawImageManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha0 + i) && imageConfig[i-1] != 0)
             {
                 Debug.Log($"Tecla {i} pulsada.");
+                levelIndex = i;
                 UpdateImages(imageConfig);
                 ChangeImage(i - 1, textures.Count - 1); // Cambia al siguiente índice circularmente
                 // Habilitar el botón si no está ya habilitado
@@ -84,6 +88,7 @@ public class RawImageManager : MonoBehaviour
             {
                 shipTextureIndex = shipTextureIndex != 0 ? (shipTextureIndex - 1) : (shipTextures.Count - 1);
                 shipImage.texture = shipTextures[shipTextureIndex];
+                shipName = shipTextures[shipTextureIndex].name;
             }
             else
             {
@@ -99,6 +104,7 @@ public class RawImageManager : MonoBehaviour
             {
                 shipTextureIndex = (shipTextureIndex + 1) % shipTextures.Count;
                 shipImage.texture = shipTextures[shipTextureIndex];
+                shipName = shipTextures[shipTextureIndex].name;
             }
             else
             {
@@ -115,7 +121,8 @@ public class RawImageManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Tecla Enter pulsada");
+                Debug.Log("Tecla Enter pulsada.\nLevel: " + levelIndex + "\nShip: " + shipName);
+                SceneManagementHandler.ChangeScene(gameObject, levelIndex, shipName);
             }
         }
     }
