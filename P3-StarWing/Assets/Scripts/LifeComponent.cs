@@ -7,6 +7,15 @@ public class LifeComponent : MonoBehaviour
     public float maxHealth = 100f; // Salud máxima
     public float currentHealth = 100f; // Salud actual
 
+    private HeartsLogic heartsLogic;
+
+    void Start()
+    {
+        if (gameObject.CompareTag("Player"))
+        {
+            heartsLogic = Object.FindFirstObjectByType<HeartsLogic>();
+        }
+    }
     // Función para aplicar daño o curación
     public void doDamage(float amount)
     {
@@ -19,7 +28,15 @@ public class LifeComponent : MonoBehaviour
 
         if ( currentHealth <= 0 )
         {
-            Die();
+            if (gameObject.CompareTag("Player"))
+            {
+                PlayerDied();
+            }
+            else
+            {
+                Debug.Log("Enemy has died.");
+                Die();
+            }
         }
     }
 
@@ -33,5 +50,31 @@ public class LifeComponent : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    private void PlayerDied()
+    {
+        Debug.Log("Player died.");
+        if (heartsLogic.ThereAreHearts())
+        {
+            RestartPlayer();
+        }
+        else
+        {
+            Debug.Log("No hay más corazones.");
+            Die();
+        }
+    }
+
+    private void RestartPlayer()
+    {
+        if (explosionEffect != null)
+        {
+            GameObject explosion = Instantiate(explosionEffect, transform.position, transform.rotation);
+        }
+        gameObject.transform.position = new Vector3(0, 8, 0);
+        gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+        Debug.Log("Player restarted.");
+        currentHealth = maxHealth;
     }
 }
