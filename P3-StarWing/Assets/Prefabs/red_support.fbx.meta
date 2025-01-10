@@ -1,0 +1,31 @@
+fileFormatVersion: 2
+guid: 6f455906b3d571d4f8b4065f6997992c
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: 217B98B7_c
+    second: {fileID: 2800000, guid: 2b7b7666ce3c696458e7b298affb25bf, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: 34FFB4D_c
+    second: {fileID: 2800000, guid: 36162d1773f21ee4185ad866fc03d719, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: 3F2D24BD_c
+    second: {fileID: 2800000, guid: aaa8d94b31604e04cad547c2f8746677, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: 485F7CB_c
+    second: {fileID: 2800000, guid: fa58ecf48b11cb9438b5aeddd19ef344, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: 543E3314_c
+    second: {fileID: 2800000, guid: 7fcfe357022c2464f800f0e7f330a1a4, type: 3}

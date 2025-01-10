@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 5662094422071002086}
   - component: {fileID: 6823099773024128203}
   - component: {fileID: 1009632202989551990}
+  - component: {fileID: 855665152147504577}
   m_Layer: 0
   m_Name: PortaFinal
   m_TagString: Untagged
@@ -134,7 +135,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 40, y: 25, z: 1}
-  m_Center: {x: 0, y: -5, z: -30}
+  m_Center: {x: 0, y: -5, z: 10}
 --- !u!114 &1009632202989551990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +153,27 @@ MonoBehaviour:
   comportaDreta: {fileID: 4609095575016644640}
   distancia: 20
   velocitat: 5
+--- !u!65 &855665152147504577
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5148788915120153694}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 80, y: 40, z: 1}
+  m_Center: {x: 0, y: 0, z: -20}
 --- !u!1 &5223298876393083920
 GameObject:
   m_ObjectHideFlags: 0

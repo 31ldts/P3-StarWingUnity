@@ -31,6 +31,12 @@ public class Projectile : MonoBehaviour
         }
     }*/
 
+    void Update()
+    {
+        // Destruir el objeto después del tiempo especificado
+        Destroy(gameObject, 5f);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         // Opcional: Comprobamos contra qué ha colisionado el proyectil

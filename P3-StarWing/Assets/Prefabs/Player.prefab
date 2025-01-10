@@ -4920,7 +4920,7 @@ Transform:
   m_GameObject: {fileID: 6050775576618690701}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: -0.65, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4971,6 +4971,8 @@ GameObject:
   - component: {fileID: 1593614836729358165}
   - component: {fileID: 4960489188249295602}
   - component: {fileID: 904554254288319496}
+  - component: {fileID: 7414340542900041285}
+  - component: {fileID: 154983874577110467}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5025,7 +5027,7 @@ MonoBehaviour:
   - {fileID: 2180496358626095488}
   - {fileID: 7733809246546334355}
   bombPrefab: {fileID: 8418040956990173649, guid: ec954198ac03e6b4fb86c45d21d1e23c, type: 3}
-  bombSpawnPoint: {fileID: 0}
+  bombSpawnPoint: {fileID: 4744877908682836566}
 --- !u!114 &6707746961322582515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5087,7 +5089,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 0.7, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &904554254288319496
 AudioSource:
@@ -5186,6 +5188,35 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7414340542900041285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8399403252619660121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c11db5d6a570a21b2adb0cfbc83c0f5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blueMarinePrefab: {fileID: 919132149155446097, guid: 30aeb2d53a5b62d4395ee33e876dc03d, type: 3}
+  redSupportPrefab: {fileID: 919132149155446097, guid: 6f455906b3d571d4f8b4065f6997992c, type: 3}
+--- !u!114 &154983874577110467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8399403252619660121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba5b942cc2f43884e86307874ee3a6a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionEffect: {fileID: 7660389631256298559, guid: a0453466cf5c81145b425907dfb03fe4, type: 3}
+  maxHealth: 100
+  currentHealth: 100
 --- !u!1001 &3496756553219839215
 PrefabInstance:
   m_ObjectHideFlags: 0

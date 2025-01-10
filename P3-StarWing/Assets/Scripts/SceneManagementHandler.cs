@@ -23,7 +23,7 @@ public class SceneManagementHandler : MonoBehaviour
         SceneManager.UnloadSceneAsync(currentScene);
 
         // Cargar una nueva escena
-        string newSceneName = "HUD_Level_1"; // Asegúrate de que esta escena esté en las Build Settings
+        string newSceneName = "HUD2_Level1"; // Asegúrate de que esta escena esté en las Build Settings
         SceneManager.LoadScene(newSceneName, LoadSceneMode.Single);
     }
 }
