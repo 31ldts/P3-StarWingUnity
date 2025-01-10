@@ -2358,9 +2358,9 @@ MonoBehaviour:
   actionButton: {fileID: 117924208}
   shipImage: {fileID: 1383369793}
   shipTextures:
-  - {fileID: 2800000, guid: 8a56a6dad0857d77c930702923deaa9c, type: 3}
-  - {fileID: 2800000, guid: a8693173557b9caf3b25a705376e72ec, type: 3}
-  - {fileID: 2800000, guid: bfe9b25641effe2d0b5c6805da5a361a, type: 3}
+  - {fileID: 2800000, guid: 7338f1465111526478f78969a70a7a6a, type: 3}
+  - {fileID: 2800000, guid: 0cd967c655e6ed8ef9705d09ba7b12d8, type: 3}
+  - {fileID: 2800000, guid: 2a9893e39ca9af05697bfc5052360fe9, type: 3}
 --- !u!4 &1519854979
 Transform:
   m_ObjectHideFlags: 0
