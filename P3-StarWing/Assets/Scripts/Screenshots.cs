@@ -26,8 +26,8 @@ public class _Captures : MonoBehaviour
         // Instanciar la nave en la escena
         GameObject shipInstance = Instantiate(shipPrefab);
         // Aplicar posición y rotación deseadas
-        shipInstance.transform.position = new Vector3(-18, 0, 120);
-        shipInstance.transform.rotation = Quaternion.Euler(10, 90, -20);
+        shipInstance.transform.position = new Vector3(0, 1, -5);
+        shipInstance.transform.rotation = Quaternion.Euler(0, 180, 0);
 
         // Renderizar la imagen
         RenderTexture renderTexture = new RenderTexture(1024, 1024, 24);

@@ -113,10 +113,10 @@ TextureImporter:
       name: boost_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 512
-        height: 512
+        x: 272
+        y: 236
+        width: 478
+        height: 551
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,74 +125,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 446890b1d4cafd60ca1799f9381df68d
-      internalID: -138636234
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: boost_1
-      rect:
-        serializedVersion: 2
-        x: 294
-        y: 0
-        width: 118
-        height: 126
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c67530f850f354470b435002a7a10468
-      internalID: -365982997
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: boost_2
-      rect:
-        serializedVersion: 2
-        x: 427
-        y: 79
-        width: 69
-        height: 35
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9e58d63169d2d8e4384302747956531c
-      internalID: -998760701
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: boost_3
-      rect:
-        serializedVersion: 2
-        x: 427
-        y: 12
-        width: 69
-        height: 35
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 592f80ebf599ec999802e0fd22ffd75b
-      internalID: -2139186223
+      spriteID: aa90b6d2a7de9d4bd9cf4164f2bcf56f
+      internalID: 1050233998
       vertices: []
       indices: 
       edges: []
@@ -201,7 +135,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 161518c1a076fdbbb8aacca6c4334e6b
+    spriteID: 390c5e4f41328239682559aeca367626
     internalID: 0
     vertices: []
     indices: 
@@ -211,10 +145,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      boost_0: -138636234
-      boost_1: -365982997
-      boost_2: -998760701
-      boost_3: -2139186223
+      boost_0: 1050233998
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

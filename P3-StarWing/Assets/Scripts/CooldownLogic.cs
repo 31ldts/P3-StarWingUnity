@@ -5,23 +5,27 @@ using UnityEngine.UI;
 
 public class CooldownLogic : MonoBehaviour
 {
-    public Image cooldownBar;         // Barra de cooldown
-    public Image[] boostImages;       // Imágenes de boost
+    [SerializeField] private Image cooldownBar;  // Barra de cooldown
+    [SerializeField] private Image[] boostImages; // Imágenes de boost
 
-    public float currentTime = 5000;  // Tiempo actual (inicia al máximo)
-    private float maxTime = 5000;     // Tiempo máximo para el cooldown
-    private bool isBoostActive = false; // Estado del boost activo
+    [SerializeField] private float maxTime = 5000f; // Tiempo máximo de cooldown
+    private float currentTime;                     // Contador interno de cooldown
+    private bool isBoostActive = false;            // Indica si el boost está activo
+    private bool cooldownReady = true;             // Indica que el cooldown ha finalizado y no se ha notificado aún
 
     void Start()
     {
-        // Validar que todos los elementos están asignados
+        // Validar asignaciones
         if (cooldownBar == null || boostImages == null || boostImages.Length != 3)
         {
             Debug.LogError("Error: Debes asignar exactamente 3 imágenes y una barra de cooldown.");
             return;
         }
 
-        // Inicializar las imágenes como interactuables
+        // Inicializar valores
+        currentTime = maxTime;
+        
+        // Activar todas las imágenes de boost
         foreach (var image in boostImages)
         {
             image.gameObject.SetActive(true);
@@ -30,35 +34,48 @@ public class CooldownLogic : MonoBehaviour
 
     void Update()
     {
-        // Actualizar la barra de cooldown
-        cooldownBar.fillAmount = currentTime / maxTime;
+        // Manejo principal del cooldown y boost
+        HandleCooldown();
+        HandleBoost();
 
-        // Reducir el tiempo si el boost está activo
-        if (isBoostActive)
-        {
-            currentTime += Time.deltaTime * 1000; // Reducir el tiempo en milisegundos
-            if (currentTime >= maxTime)
-            {
-                currentTime = maxTime;
-                isBoostActive = false; // Termina el estado de boost
-                Debug.Log("Boost terminado.");
-            }
-        }
-
-        // Activar boost al presionar 'B' si las condiciones se cumplen
-        if (Input.GetKeyDown(KeyCode.B) && !isBoostActive && currentTime >= maxTime && AnyImageActive())
-        {
-            ActivateBoost();
-        }
-
-        // Activar imágenes al presionar '+'
-        if (Input.GetKeyDown(KeyCode.A)) // Equals es la tecla '+'
+        // Manejo de la activación de imágenes con la tecla A
+        if (Input.GetKeyDown(KeyCode.A))
         {
             ActivateNextImage();
         }
     }
 
-    // Verifica si alguna imagen está activa
+    private void HandleCooldown()
+    {
+        // Actualizar la barra de cooldown
+        cooldownBar.fillAmount = currentTime / maxTime;
+
+        // Si el boost está activo, incrementa el tiempo transcurrido
+        if (isBoostActive)
+        {
+            currentTime += Time.deltaTime * 1000f; // Si deseas mantener la escala de ms
+            if (currentTime >= maxTime)
+            {
+                currentTime = maxTime;
+                isBoostActive = false;
+                cooldownReady = true && AnyImageActive();  // El cooldown se “reactiva” (señal de que terminó)
+                Debug.Log("Boost terminado.");
+            }
+        }
+    }
+
+    private void HandleBoost()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            bool canActivateBoost = !isBoostActive && currentTime >= maxTime && AnyImageActive();
+            if (canActivateBoost)
+            {
+                ActivateBoost();
+            }
+        }
+    }
+
     private bool AnyImageActive()
     {
         foreach (var image in boostImages)
@@ -71,10 +88,9 @@ public class CooldownLogic : MonoBehaviour
         return false;
     }
 
-    // Activar el estado de boost
     private void ActivateBoost()
     {
-        // Desactivar la primera imagen activa
+        // Desactivar la primera imagen activa que encontremos
         foreach (var image in boostImages)
         {
             if (image.gameObject.activeSelf)
@@ -84,16 +100,15 @@ public class CooldownLogic : MonoBehaviour
             }
         }
 
-        // Activar el boost
+        // Reiniciar el cooldown y activar el boost
         isBoostActive = true;
-        currentTime = 0; // Resetea el cooldown
+        currentTime = 0f;
         Debug.Log("Boost activado.");
     }
 
-    // Activar la siguiente imagen, hasta un máximo de 3
     private void ActivateNextImage()
     {
-        for (int i = boostImages.Length - 1; i >= 0; i--) // Comienza desde el final
+        for (int i = boostImages.Length - 1; i >= 0; i--)
         {
             if (!boostImages[i].gameObject.activeSelf)
             {
@@ -102,6 +117,16 @@ public class CooldownLogic : MonoBehaviour
                 return;
             }
         }
-        Debug.Log("No se pueden activar más imágenes, ya están todas activas.");
+        Debug.Log("No se pueden activar más imágenes; todas están activas.");
+    }
+
+    public bool IsCooldownReady()
+    {
+        bool wasReady = cooldownReady;
+        if (cooldownReady)
+        {
+            cooldownReady = false; // Consumir la notificación
+        }
+        return wasReady;
     }
 }

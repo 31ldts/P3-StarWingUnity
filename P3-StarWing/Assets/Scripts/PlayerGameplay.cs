@@ -26,6 +26,9 @@ public class PlayerGameplay : MonoBehaviour
     public GameObject bombPrefab;
     public Transform bombSpawnPoint;
 
+    // Atributs per al cooldown
+    private CooldownLogic cooldownLogic;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,6 +38,7 @@ public class PlayerGameplay : MonoBehaviour
 
         projectileShooter = GetComponent<ProjectileShooter>();
         //accelerationParticles = GetComponent<ParticleSystem>();
+        cooldownLogic = Object.FindFirstObjectByType<CooldownLogic>(); // Busca la lógica de cooldown en la escena
     }
 
     // Update is called once per frame
@@ -145,19 +149,27 @@ public class PlayerGameplay : MonoBehaviour
 
     private void DropBomb()
     {
-        if (bombPrefab != null && bombSpawnPoint != null)
+        if (cooldownLogic != null && cooldownLogic.IsCooldownReady())
         {
-            // Instanciar la bomba al punt designat
-            GameObject bomb = Instantiate(bombPrefab, bombSpawnPoint.position, Quaternion.identity);
-
-            // Afegir força inicial a la bomba (opcional)
-            Rigidbody rb = bomb.GetComponent<Rigidbody>();
-            if (rb != null)
+            if (bombPrefab != null && bombSpawnPoint != null)
             {
-                rb.linearVelocity = Vector3.down; // * bombDropForce;
+                // Instanciar la bomba al punto designado
+                GameObject bomb = Instantiate(bombPrefab, bombSpawnPoint.position, Quaternion.identity);
+
+                // Añadir fuerza inicial a la bomba (opcional)
+                Rigidbody rb = bomb.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.linearVelocity = Vector3.down; // * bombDropForce;
+                }
             }
         }
+        else
+        {
+            Debug.Log("No puedes lanzar una bomba, el cooldown no está listo.");
+        }
     }
+
 
     public void SetDoubleShotMode(bool enable)
     {

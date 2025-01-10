@@ -331,9 +331,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipPrefabs:
-  - {fileID: 919132149155446097, guid: 72659b8c084d69c5794db4265db6b261, type: 3}
+  - {fileID: 919132149155446097, guid: 80a3f37882a510f489484930bdb5f6b5, type: 3}
   captureCamera: {fileID: 1204456466}
-  savePath: Assets/Captures
+  savePath: Assets/Screenshots
 --- !u!4 &592808271
 Transform:
   m_ObjectHideFlags: 0
