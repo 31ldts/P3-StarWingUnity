@@ -8,6 +8,7 @@ public class LifeComponent : MonoBehaviour
     public float currentHealth = 100f; // Salud actual
 
     private HeartsLogic heartsLogic;
+    private ExperienceLogic experienceLogic;
 
     void Start()
     {
@@ -15,12 +16,22 @@ public class LifeComponent : MonoBehaviour
         {
             heartsLogic = Object.FindFirstObjectByType<HeartsLogic>();
         }
+        else
+        {
+            // Se entiende que el resto son enemigos
+            experienceLogic = Object.FindFirstObjectByType<ExperienceLogic>();
+            experienceLogic.AddTotalExperience(maxHealth);
+        }
     }
     // Función para aplicar daño o curación
     public void doDamage(float amount)
     {
         // Aplica daño o curación y restringe el resultado entre el valor mínimo y máximo
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+
+        if (!gameObject.CompareTag("Player")) {
+            experienceLogic.AddExperience(-amount);
+        }
 
         // Para depuración
         Debug.Log($"{gameObject.name} ha rebut {amount} dany. Vida restant: {currentHealth}");
