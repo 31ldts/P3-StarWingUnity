@@ -551,9 +551,10 @@ GameObject:
   - component: {fileID: -6881801113282512717}
   - component: {fileID: 2528249391928516524}
   - component: {fileID: 2515178157907974152}
+  - component: {fileID: 6748184196907900677}
   m_Layer: 0
   m_Name: TorretaDefensiva
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -662,6 +663,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &6748184196907900677
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6566088529546006724}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6, y: 10, z: 5}
+  m_Center: {x: -2, y: -6, z: 2}
 --- !u!1001 &3731510347482733088
 PrefabInstance:
   m_ObjectHideFlags: 0

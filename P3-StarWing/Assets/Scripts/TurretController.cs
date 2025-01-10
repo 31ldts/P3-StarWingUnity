@@ -6,8 +6,8 @@ public class TurretController : MonoBehaviour
 
     public float detectionRange = 50f; // Distància màxima per detectar el jugador
     public float rotationSpeed = 15f; // Velocitat de rotació de la torreta
-    public float fireRate = 0.5f; // Velocitat de dispar dels projectils (un cada X segons)
-    private float fireCooldown = 0f; // Temporitzador de dispar
+    public float fireRate = 1f; // Velocitat de dispar dels projectils (un cada X segons)
+    private float fireCooldown = 0.5f; // Temporitzador de dispar
 
     public ProjectileShooter projectileShooter;
 
@@ -30,10 +30,11 @@ public class TurretController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
 
             // Disparar al jugador si es troba dins del rang i es pot disparar
-            if (Time.time >= fireCooldown)
+            fireCooldown -= Time.deltaTime;
+            if (fireCooldown <= 0f)// && IsAimingAtPlayer(lookRotation))
             {
                 projectileShooter.ShootProjectile(false);
-                fireCooldown = Time.time + 1f / fireRate; // Calcula el següent dispar
+                fireCooldown = fireRate; // Calcula el següent dispar
             }
         }
     }

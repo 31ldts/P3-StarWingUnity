@@ -3,9 +3,10 @@ using UnityEngine;
 public class ProjectileShooter : MonoBehaviour
 {
     public GameObject projectilePrefab; // Objecte projectil
-    public Transform firePoint;        // Punt des d'on surten els projectils
-    public float projectileSpeed = 80f; // Velocitat del projectil
 
+    public Transform firePoint;  // Punt des d'on surten els projectils
+
+    public float projectileSpeed = 80f; // Velocitat del projectil
     private AudioSource laserAudio;
 
 

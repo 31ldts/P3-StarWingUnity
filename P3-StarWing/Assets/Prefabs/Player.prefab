@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6057895027021851496}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &984206384160384959
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2180496358626095488}
+  m_Layer: 0
+  m_Name: doubleFire1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2180496358626095488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984206384160384959}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.2, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6057895027021851496}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3336224159780178643
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,7 +89,7 @@ Transform:
   m_GameObject: {fileID: 3336224159780178643}
   serializedVersion: 2
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -200,7 +231,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 10
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -695,7 +726,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 5
+    type: 18
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -4864,6 +4895,68 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &6050775576618690701
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4744877908682836566}
+  m_Layer: 0
+  m_Name: bombPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4744877908682836566
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6050775576618690701}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6057895027021851496}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6936367724334583513
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7733809246546334355}
+  m_Layer: 0
+  m_Name: doubleFire2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7733809246546334355
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6936367724334583513}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.2, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6057895027021851496}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8399403252619660121
 GameObject:
   m_ObjectHideFlags: 0
@@ -4880,7 +4973,7 @@ GameObject:
   - component: {fileID: 904554254288319496}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4900,7 +4993,10 @@ Transform:
   m_Children:
   - {fileID: 3966616786409714436}
   - {fileID: 2869992247503220312}
+  - {fileID: 2180496358626095488}
+  - {fileID: 7733809246546334355}
   - {fileID: 2220703087662792279}
+  - {fileID: 4744877908682836566}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2718330888900807015
@@ -4915,16 +5011,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77c0c60b573f64646b1765fc8d3e552f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 4
+  movementSpeed: 8
   initialSpeed: 0
   acceleration: 3
   deceleration: 2
-  maxSpeed: 10
+  maxSpeed: 20
   minSpeed: 2
   rotationSpeed: 10
   lerpSpeed: 2
-  accelerationParticles: {fileID: 0}
-  projectileShooter: {fileID: 0}
+  accelerationParticles: {fileID: 609882795269467748}
+  singleFirePoint: {fileID: 2869992247503220312}
+  doubleFirePoint:
+  - {fileID: 2180496358626095488}
+  - {fileID: 7733809246546334355}
+  bombPrefab: {fileID: 8418040956990173649, guid: ec954198ac03e6b4fb86c45d21d1e23c, type: 3}
+  bombSpawnPoint: {fileID: 0}
 --- !u!114 &6707746961322582515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4938,8 +5039,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 8120997893804191312, guid: f32e751bba2a8a84882c91f7e1f144a5, type: 3}
-  firePoint: {fileID: 2869992247503220312}
-  projectileSpeed: 100
+  firePoint: {fileID: 0}
+  projectileSpeed: 80
 --- !u!54 &1593614836729358165
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4948,7 +5049,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8399403252619660121}
   serializedVersion: 4
-  m_Mass: 100
+  m_Mass: 500
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -5000,7 +5101,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c00b0e30e85f55840a231aa762075122, type: 3}
   m_Resource: {fileID: 8300000, guid: c00b0e30e85f55840a231aa762075122, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
