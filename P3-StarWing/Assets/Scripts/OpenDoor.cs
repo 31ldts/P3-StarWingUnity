@@ -13,6 +13,10 @@ public class OpenDoor : MonoBehaviour
     private Vector3 posicioInicialEsquerra;
     private Vector3 posicioInicialDreta;
 
+    private float numTriggers = 0f;
+    private ExperienceLogic experienceLogic;
+    [SerializeField] private LifeComponent lifeComponent;
+
     //private bool obrint = false; // Controla si la porta s'ha d'obrir
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -22,6 +26,9 @@ public class OpenDoor : MonoBehaviour
         posicioInicialDreta = comportaDreta.position;
 
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        experienceLogic = Object.FindFirstObjectByType<ExperienceLogic>();
+        //lifeComponent = GetComponent<LifeComponent>();
     }
 
     // Update is called once per frame
@@ -62,6 +69,37 @@ public class OpenDoor : MonoBehaviour
             velocitat * Time.deltaTime
         );
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+       if (other.CompareTag("Player"))
+        {
+            Debug.Log("He entrado en el trigger!");
+            numTriggers++;
+            Debug.Log(numTriggers);
+            if (numTriggers == 2)
+            {
+                // Pasamos de nivel
+                Canvas[] allCanvases = Resources.FindObjectsOfTypeAll<Canvas>();
+
+                foreach (Canvas canvas in allCanvases)
+                {
+                    if (canvas.gameObject.CompareTag("Completed"))
+                    {
+                        canvas.gameObject.SetActive(true);
+                        break;
+                    }
+                }
+            }
+            else if ((numTriggers == 1) && (experienceLogic.getTotalExperience() < 1.0f))
+            {
+                Debug.Log(experienceLogic.getTotalExperience());
+                Debug.Log("Estoy en el segundo if!");
+                lifeComponent.PlayerDied(false);
+                numTriggers = 0;
+            }
+        }
     }
 
     /*private void OnTriggerEnter(Collider other)

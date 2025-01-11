@@ -14,11 +14,15 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
-        Vector3 desiredPosition = target.position + Vector3.up * height - target.forward * distance;
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-        transform.position = smoothedPosition;
+        if (target != null)
+        {
 
-        transform.LookAt(target); // Fa que la càmera sempre miri cap a la nau
+            Vector3 desiredPosition = target.position + Vector3.up * height - target.forward * distance;
+            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+            transform.position = smoothedPosition;
+
+            transform.LookAt(target); // Fa que la càmera sempre miri cap a la nau
+        }
     }
 }
 

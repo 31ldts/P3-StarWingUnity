@@ -39,10 +39,10 @@ public class CooldownLogic : MonoBehaviour
         HandleBoost();
 
         // Manejo de la activación de imágenes con la tecla A
-        if (Input.GetKeyDown(KeyCode.A))
+        /*if (Input.GetKeyDown(KeyCode.A))
         {
             ActivateNextImage();
-        }
+        }*/
     }
 
     private void HandleCooldown()

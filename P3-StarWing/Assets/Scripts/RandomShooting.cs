@@ -19,19 +19,21 @@ public class RandomShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Calcula la distància al jugador
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-
-        // Comprova si el jugador és dins del rang establert i davant la torreta
-        if (distanceToPlayer <= detectionRange)
+        if (player != null)
         {
-            if (Time.time >= nextFireTime)
+            // Calcula la distància al jugador
+            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+            // Comprova si el jugador és dins del rang establert i davant la torreta
+            if (distanceToPlayer <= detectionRange)
             {
-                projectileShooter.ShootProjectile(false); // No és un projectil del jugador
-                nextFireTime = Time.time + 1f / fireRate;
+                if (Time.time >= nextFireTime)
+                {
+                    projectileShooter.ShootProjectile(false); // No és un projectil del jugador
+                    nextFireTime = Time.time + 1f / fireRate;
+                }
             }
-        }
-           
+        }    
     }
 
     private void OnDrawGizmosSelected()

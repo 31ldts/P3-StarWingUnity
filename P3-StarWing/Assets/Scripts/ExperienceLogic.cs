@@ -27,4 +27,9 @@ public class ExperienceLogic : MonoBehaviour
         // Asignamos ese porcentaje al fillAmount de la imagen
         experienceFillImage.fillAmount = experiencePercentage;
     }
+
+    public float getTotalExperience()
+    {
+        return currentExperience/totalExperience;
+    }
 }

@@ -41,7 +41,7 @@ public class LifeComponent : MonoBehaviour
         {
             if (gameObject.CompareTag("Player"))
             {
-                PlayerDied();
+                PlayerDied(true);
             }
             else
             {
@@ -63,12 +63,28 @@ public class LifeComponent : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void PlayerDied()
+    public void PlayerDied(bool killed)
     {
         Debug.Log("Player died.");
         if (heartsLogic.ThereAreHearts())
         {
-            RestartPlayer();
+            if (killed)
+            {
+                RestartPlayer();
+            } else
+            {
+                //Die();
+                Canvas[] allCanvases = Resources.FindObjectsOfTypeAll<Canvas>();
+
+                foreach (Canvas canvas in allCanvases)
+                {
+                    if (canvas.gameObject.CompareTag("NoCompleted"))
+                    {
+                        canvas.gameObject.SetActive(true);
+                        break;
+                    }
+                }
+            }
         }
         else
         {
@@ -87,12 +103,8 @@ public class LifeComponent : MonoBehaviour
         }
     }
 
-    private void RestartPlayer()
+    public void RestartPlayer()
     {
-        if (explosionEffect != null)
-        {
-            GameObject explosion = Instantiate(explosionEffect, transform.position, transform.rotation);
-        }
         gameObject.transform.position = new Vector3(0, 8, 0);
         gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
         Debug.Log("Player restarted.");
