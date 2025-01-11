@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class OpenDoor : MonoBehaviour
 {
-    public GameObject[] enemies; // Array que contindrà tots els objectes classificats com a enemics
+    public GameObject[] enemies; // Array que contindrï¿½ tots els objectes classificats com a enemics
 
     public Transform comportaEsquerra;
     public Transform comportaDreta;
@@ -81,16 +81,7 @@ public class OpenDoor : MonoBehaviour
             if (numTriggers == 2)
             {
                 // Pasamos de nivel
-                Canvas[] allCanvases = Resources.FindObjectsOfTypeAll<Canvas>();
-
-                foreach (Canvas canvas in allCanvases)
-                {
-                    if (canvas.gameObject.CompareTag("Completed"))
-                    {
-                        canvas.gameObject.SetActive(true);
-                        break;
-                    }
-                }
+                CanvasHandler.ActivateCanvas("Completed");
             }
             else if ((numTriggers == 1) && (experienceLogic.getTotalExperience() < 1.0f))
             {
@@ -101,13 +92,4 @@ public class OpenDoor : MonoBehaviour
             }
         }
     }
-
-    /*private void OnTriggerEnter(Collider other)
-    {
-        // Comprovem si l'objecte que entra és el jugador (a canviar la condició posteriorment)
-        if (other.CompareTag("Player"))
-        {
-            obrint = true; // Inicia l'obertura
-        }
-    }*/
 }

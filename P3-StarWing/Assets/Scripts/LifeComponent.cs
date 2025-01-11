@@ -73,31 +73,12 @@ public class LifeComponent : MonoBehaviour
                 RestartPlayer();
             } else
             {
-                //Die();
-                Canvas[] allCanvases = Resources.FindObjectsOfTypeAll<Canvas>();
-
-                foreach (Canvas canvas in allCanvases)
-                {
-                    if (canvas.gameObject.CompareTag("NoCompleted"))
-                    {
-                        canvas.gameObject.SetActive(true);
-                        break;
-                    }
-                }
+                CanvasHandler.ActivateCanvas("NoCompleted");
             }
         }
         else
         {
-            Canvas[] allCanvases = Resources.FindObjectsOfTypeAll<Canvas>();
-
-            foreach (Canvas canvas in allCanvases)
-            {
-                if (canvas.gameObject.CompareTag("Defeat"))
-                {
-                    canvas.gameObject.SetActive(true);
-                    break;
-                }
-            }
+            CanvasHandler.ActivateCanvas("Defeat");
             Debug.Log("No hay más corazones.");
             Die();
         }

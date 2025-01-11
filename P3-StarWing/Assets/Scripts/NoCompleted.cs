@@ -6,11 +6,6 @@ public class NoCompleted : MonoBehaviour
     [SerializeField] private LifeComponent lifeComponent;
     [SerializeField] private Canvas canvas;
 
-    /*private void Start()
-    {
-        lifeComponent = GetComponent<LifeComponent>();
-    }*/
-
     // Update is called once per frame
     void Update()
     {
