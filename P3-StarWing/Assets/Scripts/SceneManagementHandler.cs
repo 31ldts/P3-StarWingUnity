@@ -26,4 +26,22 @@ public class SceneManagementHandler : MonoBehaviour
         string newSceneName = "HUD2_Level1"; // Asegúrate de que esta escena esté en las Build Settings
         SceneManager.LoadScene(newSceneName, LoadSceneMode.Single);
     }
+
+    public static void MenuScene(GameObject invoker)
+    {
+        // Desactivar y eliminar el objeto invocador
+        if (invoker != null)
+        {
+            Destroy(invoker);
+            Debug.Log("Objeto invocador eliminado.");
+        }
+
+        // Eliminar la escena actual
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.UnloadSceneAsync(currentScene);
+
+        // Cargar una nueva escena
+        string newSceneName = "Menu"; // Asegúrate de que esta escena esté en las Build Settings
+        SceneManager.LoadScene(newSceneName, LoadSceneMode.Single);
+    }
 }
