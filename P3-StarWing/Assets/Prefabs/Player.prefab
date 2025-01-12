@@ -4968,12 +4968,12 @@ GameObject:
   - component: {fileID: 6057895027021851496}
   - component: {fileID: 2718330888900807015}
   - component: {fileID: 6707746961322582515}
-  - component: {fileID: 1593614836729358165}
   - component: {fileID: 4960489188249295602}
   - component: {fileID: 904554254288319496}
   - component: {fileID: 7414340542900041285}
   - component: {fileID: 154983874577110467}
   - component: {fileID: 2549630634821596374}
+  - component: {fileID: 1121219612606963360}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5029,6 +5029,14 @@ MonoBehaviour:
   - {fileID: 7733809246546334355}
   bombPrefab: {fileID: 8418040956990173649, guid: ec954198ac03e6b4fb86c45d21d1e23c, type: 3}
   bombSpawnPoint: {fileID: 4744877908682836566}
+  cameraTransform: {fileID: 0}
+  cameraOffset: {x: 0, y: 0, z: 0}
+  followSpeed: 7
+  returnToZeroSpeed: 1.5
+  verticalRotationLimit: 15
+  horizontalRotationLimit: 45
+  transportBackDistance: 15
+  resetDuration: 0.5
 --- !u!114 &6707746961322582515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5044,33 +5052,6 @@ MonoBehaviour:
   projectilePrefab: {fileID: 8120997893804191312, guid: f32e751bba2a8a84882c91f7e1f144a5, type: 3}
   firePoint: {fileID: 0}
   projectileSpeed: 80
---- !u!54 &1593614836729358165
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8399403252619660121}
-  serializedVersion: 4
-  m_Mass: 500
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &4960489188249295602
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5218,6 +5199,7 @@ MonoBehaviour:
   explosionEffect: {fileID: 7660389631256298559, guid: a0453466cf5c81145b425907dfb03fe4, type: 3}
   maxHealth: 100
   currentHealth: 100
+  collisionDamage: 20
 --- !u!114 &2549630634821596374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5225,12 +5207,39 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8399403252619660121}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75c58707f9fd0a24a9449816e7b5dddd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 20
+--- !u!54 &1121219612606963360
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8399403252619660121}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &3496756553219839215
 PrefabInstance:
   m_ObjectHideFlags: 0
