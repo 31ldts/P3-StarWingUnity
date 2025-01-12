@@ -112,10 +112,12 @@ public class PlayerGameplay : MonoBehaviour
             if (Input.GetKey(KeyCode.Q))
             {
                 movementSpeed = Mathf.Max(minSpeed, movementSpeed - acceleration * Time.deltaTime);
+                accelerationParticles.Stop();
             }
             else if (Input.GetKey(KeyCode.E))
             {
                 movementSpeed = Mathf.Min(maxSpeed, movementSpeed + acceleration * Time.deltaTime);
+                accelerationParticles.Play();
             }
             else
             {
@@ -129,7 +131,6 @@ public class PlayerGameplay : MonoBehaviour
                 }
                 accelerationParticles.Stop();
             }
-            accelerationParticles.Play();
 
             float rotateVertical = 0;
             if (Input.GetKey(KeyCode.W))

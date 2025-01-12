@@ -150,7 +150,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: c00b0e30e85f55840a231aa762075122, type: 3}
   m_Resource: {fileID: 8300000, guid: c00b0e30e85f55840a231aa762075122, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -249,6 +249,7 @@ MonoBehaviour:
   explosionEffect: {fileID: 7660389631256298559, guid: a0453466cf5c81145b425907dfb03fe4, type: 3}
   maxHealth: 150
   currentHealth: 150
+  collisionDamage: 20
 --- !u!1001 &5874679866736980817
 PrefabInstance:
   m_ObjectHideFlags: 0
