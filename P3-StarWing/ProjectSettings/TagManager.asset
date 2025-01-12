@@ -9,6 +9,8 @@ TagManager:
   - NoCompleted
   - Completed
   - Wall
+  - Projectile
+  - Ground
   layers:
   - Default
   - TransparentFX

@@ -14,11 +14,11 @@ public class Bomb : MonoBehaviour
         Collider[] hits = Physics.OverlapSphere(transform.position, radi);
         foreach (Collider hit in hits)
         {
-            Debug.Log(hit.name);
+            //Debug.Log(hit.name);
             LifeComponent life = hit.GetComponent<LifeComponent>();
             if (life != null)
             {
-                life.doDamage(-dany);
+                life.doDamage(dany);
             }
         }
 

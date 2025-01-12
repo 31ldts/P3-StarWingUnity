@@ -125,6 +125,20 @@ public class PlayerGameplay : MonoBehaviour
                 }
                 accelerationParticles.Stop();
             }
+                accelerationParticles.Play();
+            }
+            else
+            {
+                if (movementSpeed > initialSpeed)
+                {
+                    movementSpeed -= 4f * Time.deltaTime;
+                }
+                else
+                {
+                    movementSpeed += 1f * Time.deltaTime;
+                }
+                accelerationParticles.Stop();
+            }
 
             float rotateVertical = 0;
             if (Input.GetKey(KeyCode.W))
