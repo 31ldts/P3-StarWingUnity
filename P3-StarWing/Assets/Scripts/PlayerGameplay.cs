@@ -284,10 +284,10 @@ public class PlayerGameplay : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Emtrouu2.");
+        
         if (collision.gameObject.CompareTag("Wall")) // Verifica si el objeto tiene el tag "Wall"
         {
-            Debug.Log("Emtrouu.");
+            
             // Transporta la nave hacia atrás
             Vector3 backDirection = -transform.forward;
             transform.position += backDirection * transportBackDistance;

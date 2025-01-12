@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LifeComponent : MonoBehaviour
 {
@@ -24,6 +25,10 @@ public class LifeComponent : MonoBehaviour
             experienceLogic = Object.FindFirstObjectByType<ExperienceLogic>();
             experienceLogic.AddTotalExperience(maxHealth);
         }
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        if (currentSceneName == "XaviLevel2"){
+            experienceLogic.AddTotalExperience(500);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -37,7 +42,6 @@ public class LifeComponent : MonoBehaviour
             {
                 if (gameObject.CompareTag("Player"))
                 {
-                    Debug.Log("Entroo.");
                     // Si es el jugador, resta 30 puntos de vida y hace explotar el asteroide
                     doDamage(30f); // Daño de 30 al jugador
                     ExplodeAsteroid(collision.gameObject); // Hacer explotar el asteroide
