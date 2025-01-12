@@ -59,7 +59,11 @@ public class PlayerGameplay : MonoBehaviour
         string currentSceneName = SceneManager.GetActiveScene().name;
         if (currentSceneName == "XaviLevel2")
         {
-            rotationSpeed = 1500f;
+            Rigidbody rb = GetComponent<Rigidbody>();
+
+            // Activar isKinematic
+            rb.isKinematic = true;  // Esto desactiva la física y permite moverlo manualmente
+            rotationSpeed = 1600f;
             // Movilidad horizontal (Yaw - rotación sobre el eje Y)
             float rotateHorizontal = 0;
             if (Input.GetKey(KeyCode.A)) // Girar a la izquierda
@@ -281,8 +285,10 @@ public class PlayerGameplay : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Emtrouu2.");
         if (collision.gameObject.CompareTag("Wall")) // Verifica si el objeto tiene el tag "Wall"
         {
+            Debug.Log("Emtrouu.");
             // Transporta la nave hacia atrás
             Vector3 backDirection = -transform.forward;
             transform.position += backDirection * transportBackDistance;

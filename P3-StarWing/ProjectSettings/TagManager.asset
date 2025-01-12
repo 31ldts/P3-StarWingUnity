@@ -11,6 +11,7 @@ TagManager:
   - Wall
   - Projectile
   - Ground
+  - Asteroid
   layers:
   - Default
   - TransparentFX

@@ -29,10 +29,27 @@ public class LifeComponent : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log(collision.gameObject.name);
-        //Debug.Log(gameObject);
+
+         
         if (!collision.gameObject.CompareTag("Projectile"))
         {
-            if (!(gameObject.CompareTag("Enemy") && collision.gameObject.CompareTag("Ground")))
+            if (collision.gameObject.CompareTag("Asteroid"))
+            {
+                if (gameObject.CompareTag("Player"))
+                {
+                    Debug.Log("Entroo.");
+                    // Si es el jugador, resta 30 puntos de vida y hace explotar el asteroide
+                    doDamage(30f); // Daño de 30 al jugador
+                    ExplodeAsteroid(collision.gameObject); // Hacer explotar el asteroide
+                }
+                // Si es un enemigo, no hacer nada
+                else if (gameObject.CompareTag("Enemy"))
+                {
+                    // No hacer nada
+                    return;
+                }
+            }
+            else if (!(gameObject.CompareTag("Enemy") && collision.gameObject.CompareTag("Ground")))
             {
                 doDamage(collisionDamage);
             }
@@ -46,12 +63,10 @@ public class LifeComponent : MonoBehaviour
             amount = maxHealth;
         }
 
-        //Debug.Log(amount);
-
         // Aplica daño o curación y restringe el resultado entre el valor mínimo y máximo
         currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
 
-        if (gameObject.CompareTag("Enemy")) {
+        if (gameObject.CompareTag("Enemy") || gameObject.CompareTag("Asteroid")) {
             experienceLogic.AddExperience(amount);
         }
 
@@ -59,7 +74,7 @@ public class LifeComponent : MonoBehaviour
         Debug.Log($"{gameObject.name} ha rebut {amount} dany. Vida restant: {currentHealth}");
         Debug.Log($"Current Health: {currentHealth}/{maxHealth}");
 
-        if ( currentHealth <= 0 )
+        if (currentHealth <= 0)
         {
             if (gameObject.CompareTag("Player"))
             {
@@ -93,7 +108,8 @@ public class LifeComponent : MonoBehaviour
             if (killed)
             {
                 RestartPlayer();
-            } else
+            }
+            else
             {
                 CanvasHandler.ActivateCanvas("NoCompleted");
             }
@@ -112,5 +128,18 @@ public class LifeComponent : MonoBehaviour
         gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
         Debug.Log("Player restarted.");
         currentHealth = maxHealth;
+    }
+
+    // Función para hacer explotar el asteroide
+    private void ExplodeAsteroid(GameObject asteroid)
+    {
+        // Si el asteroide tiene una explosión asignada, creamos el efecto
+        if (explosionEffect != null)
+        {
+            Instantiate(explosionEffect, asteroid.transform.position, asteroid.transform.rotation);
+        }
+        
+        // Destruimos el asteroide
+        Destroy(asteroid);
     }
 }
