@@ -23,14 +23,21 @@ public class LifeComponent : MonoBehaviour
             experienceLogic.AddTotalExperience(maxHealth);
         }
     }
+
     // Función para aplicar daño o curación
     public void doDamage(float amount)
     {
-        // Aplica daño o curación y restringe el resultado entre el valor mínimo y máximo
-        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        if (amount > maxHealth) {
+            amount = maxHealth;
+        }
 
-        if (!gameObject.CompareTag("Player")) {
-            experienceLogic.AddExperience(-amount);
+        Debug.Log(amount);
+
+        // Aplica daño o curación y restringe el resultado entre el valor mínimo y máximo
+        currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
+
+        if (gameObject.CompareTag("Enemy")) {
+            experienceLogic.AddExperience(amount);
         }
 
         // Para depuración

@@ -48,7 +48,7 @@ public class Projectile : MonoBehaviour
         // Si el objeto tiene un LifeComponent, aplica el daño
         if ( life != null )
         {
-            life.doDamage(-damageAmount);
+            life.doDamage(damageAmount);
         }
 
         // Destruimos el proyectil en el momento de la colisión

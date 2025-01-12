@@ -4973,6 +4973,7 @@ GameObject:
   - component: {fileID: 904554254288319496}
   - component: {fileID: 7414340542900041285}
   - component: {fileID: 154983874577110467}
+  - component: {fileID: 2549630634821596374}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5217,6 +5218,19 @@ MonoBehaviour:
   explosionEffect: {fileID: 7660389631256298559, guid: a0453466cf5c81145b425907dfb03fe4, type: 3}
   maxHealth: 100
   currentHealth: 100
+--- !u!114 &2549630634821596374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8399403252619660121}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c58707f9fd0a24a9449816e7b5dddd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 20
 --- !u!1001 &3496756553219839215
 PrefabInstance:
   m_ObjectHideFlags: 0
