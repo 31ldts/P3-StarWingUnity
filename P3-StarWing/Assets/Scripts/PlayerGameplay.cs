@@ -89,16 +89,29 @@ public class PlayerGameplay : MonoBehaviour
         }
         else
         {
+            transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
+
             if (Input.GetKey(KeyCode.Q))
             {
                 movementSpeed = Mathf.Max(minSpeed, movementSpeed - acceleration * Time.deltaTime);
             }
-            if (Input.GetKey(KeyCode.E))
+            else if (Input.GetKey(KeyCode.E))
             {
                 movementSpeed = Mathf.Min(maxSpeed, movementSpeed + acceleration * Time.deltaTime);
+                accelerationParticles.Play();
             }
-
-            transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
+            else
+            {
+                if (movementSpeed > initialSpeed)
+                {
+                    movementSpeed -= 4f * Time.deltaTime;
+                }
+                else
+                {
+                    movementSpeed += 1f * Time.deltaTime;
+                }
+                accelerationParticles.Stop();
+            }
 
             float rotateVertical = 0;
             if (Input.GetKey(KeyCode.W))

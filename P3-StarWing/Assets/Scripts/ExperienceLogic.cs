@@ -10,14 +10,14 @@ public class ExperienceLogic : MonoBehaviour
     public void AddExperience(float experience)
     {
         currentExperience += experience;
-        Debug.Log($"Experience: {currentExperience}/{totalExperience}");
+        //Debug.Log($"Experience: {currentExperience}/{totalExperience}");
         UpdateExperienceUI();
     }
 
     public void AddTotalExperience(float experience)
     {
         totalExperience += experience;
-        Debug.Log($"Total Experience: {currentExperience}/{totalExperience}");
+        //Debug.Log($"Total Experience: {currentExperience}/{totalExperience}");
         UpdateExperienceUI();
     }
 

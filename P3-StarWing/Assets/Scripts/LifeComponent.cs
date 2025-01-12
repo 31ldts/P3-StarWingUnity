@@ -7,6 +7,8 @@ public class LifeComponent : MonoBehaviour
     public float maxHealth = 100f; // Salud máxima
     public float currentHealth = 100f; // Salud actual
 
+    public float collisionDamage = 20f;
+
     private HeartsLogic heartsLogic;
     private ExperienceLogic experienceLogic;
 
@@ -24,6 +26,19 @@ public class LifeComponent : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.gameObject.name);
+        //Debug.Log(gameObject);
+        if (!collision.gameObject.CompareTag("Projectile"))
+        {
+            if (!(gameObject.CompareTag("Enemy") && collision.gameObject.CompareTag("Ground")))
+            {
+                doDamage(collisionDamage);
+            }
+        }
+    }
+
     // Función para aplicar daño o curación
     public void doDamage(float amount)
     {
@@ -31,7 +46,7 @@ public class LifeComponent : MonoBehaviour
             amount = maxHealth;
         }
 
-        Debug.Log(amount);
+        //Debug.Log(amount);
 
         // Aplica daño o curación y restringe el resultado entre el valor mínimo y máximo
         currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);

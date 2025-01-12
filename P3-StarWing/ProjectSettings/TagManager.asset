@@ -8,6 +8,8 @@ TagManager:
   - Defeat
   - NoCompleted
   - Completed
+  - Projectile
+  - Ground
   layers:
   - Default
   - TransparentFX
