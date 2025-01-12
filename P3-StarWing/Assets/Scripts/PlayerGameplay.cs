@@ -47,6 +47,7 @@ public class PlayerGameplay : MonoBehaviour
         string currentSceneName = SceneManager.GetActiveScene().name;
         if (currentSceneName == "XaviLevel2")
         {
+            rotationSpeed = 1500f;
             // Movilidad horizontal (Yaw - rotación sobre el eje Y)
             float rotateHorizontal = 0;
             if (Input.GetKey(KeyCode.A)) // Girar a la izquierda
