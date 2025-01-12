@@ -108,23 +108,11 @@ public class PlayerGameplay : MonoBehaviour
             if (Input.GetKey(KeyCode.Q))
             {
                 movementSpeed = Mathf.Max(minSpeed, movementSpeed - acceleration * Time.deltaTime);
+                accelerationParticles.Stop();
             }
             else if (Input.GetKey(KeyCode.E))
             {
                 movementSpeed = Mathf.Min(maxSpeed, movementSpeed + acceleration * Time.deltaTime);
-            }
-            else
-            {
-                if (movementSpeed > initialSpeed)
-                {
-                    movementSpeed -= 4f * Time.deltaTime;
-                }
-                else
-                {
-                    movementSpeed += 1f * Time.deltaTime;
-                }
-                accelerationParticles.Stop();
-            }
                 accelerationParticles.Play();
             }
             else

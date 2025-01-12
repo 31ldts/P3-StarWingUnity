@@ -3,6 +3,51 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagementHandler : MonoBehaviour
 {
+    private Canvas canvas;
+    private LifeComponent lifeComponent;
+
+    private static string lvl1 = "HUD2_Level1";
+    private static string lvl2 = "XaviLevel2";
+    private static string lvl3 = "NeusTestScene";
+
+    static Scene currentScene;
+
+    void Start()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        currentScene = SceneManager.GetActiveScene();
+
+        canvas = GetComponentInParent<Canvas>();
+        lifeComponent = player.GetComponent<LifeComponent>();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            Debug.Log("Tecla Enter pulsada.");
+            if (canvas.CompareTag("NoCompleted"))
+            {
+                lifeComponent.RestartPlayer();
+                CanvasHandler.DeactivateCanvas("NoCompleted");
+            } else if (canvas.CompareTag("Defeat"))
+            {
+                MenuScene(gameObject);
+            } else if (canvas.CompareTag("Completed"))
+            {
+                Debug.Log("COMPLETAT!");
+                if (currentScene.name == lvl1)
+                {
+                    SceneManager.LoadScene(lvl2);
+                }
+                else if (currentScene.name == lvl2)
+                {
+                    SceneManager.LoadScene(lvl3);
+                }
+            }
+        }
+    }
+
     public static void ChangeScene(GameObject invoker, int levelIndex, string shipName)
     {
         // Guardar el nombre de la nave en GameData
@@ -19,12 +64,23 @@ public class SceneManagementHandler : MonoBehaviour
         }
 
         // Eliminar la escena actual
-        Scene currentScene = SceneManager.GetActiveScene();
+        currentScene = SceneManager.GetActiveScene();
         SceneManager.UnloadSceneAsync(currentScene);
 
-        // Cargar una nueva escena
-        string newSceneName = "HUD2_Level1"; // Asegúrate de que esta escena esté en las Build Settings
-        SceneManager.LoadScene(newSceneName, LoadSceneMode.Single);
+        // Cargar la escena correspondiente (ha de estar en los Build Settings)
+
+        if (levelIndex == 1)
+        {
+            SceneManager.LoadScene(lvl1, LoadSceneMode.Single);
+        }
+        else if (levelIndex == 2)
+        {
+            SceneManager.LoadScene(lvl2, LoadSceneMode.Single);
+        } else if(levelIndex == 3)
+        {
+            SceneManager.LoadScene(lvl3, LoadSceneMode.Single);
+        }
+        
     }
 
     public static void MenuScene(GameObject invoker)

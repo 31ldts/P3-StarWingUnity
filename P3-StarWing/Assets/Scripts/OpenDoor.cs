@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OpenDoor : MonoBehaviour
 {
@@ -81,6 +82,7 @@ public class OpenDoor : MonoBehaviour
             if (numTriggers == 2)
             {
                 // Pasamos de nivel
+                Scene currentScene = SceneManager.GetActiveScene();
                 CanvasHandler.ActivateCanvas("Completed");
             }
             else if ((numTriggers == 1) && (experienceLogic.getTotalExperience() < 1.0f))

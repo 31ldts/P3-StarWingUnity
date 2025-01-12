@@ -1621,10 +1621,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TorretaDefensiva
       objectReference: {fileID: 0}
-    - target: {fileID: 6566088529546006724, guid: 15e48bceb010c144f9cc4cf442414c1e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7225131060592067811, guid: 15e48bceb010c144f9cc4cf442414c1e, type: 3}
       propertyPath: player
       value: 

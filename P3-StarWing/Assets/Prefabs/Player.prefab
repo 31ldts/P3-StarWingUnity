@@ -5029,6 +5029,14 @@ MonoBehaviour:
   - {fileID: 7733809246546334355}
   bombPrefab: {fileID: 8418040956990173649, guid: ec954198ac03e6b4fb86c45d21d1e23c, type: 3}
   bombSpawnPoint: {fileID: 4744877908682836566}
+  cameraTransform: {fileID: 0}
+  cameraOffset: {x: 0, y: 0, z: 0}
+  followSpeed: 7
+  returnToZeroSpeed: 1.5
+  verticalRotationLimit: 15
+  horizontalRotationLimit: 45
+  transportBackDistance: 15
+  resetDuration: 0.5
 --- !u!114 &6707746961322582515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5105,7 +5113,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: c00b0e30e85f55840a231aa762075122, type: 3}
   m_Resource: {fileID: 8300000, guid: c00b0e30e85f55840a231aa762075122, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -5218,6 +5226,7 @@ MonoBehaviour:
   explosionEffect: {fileID: 7660389631256298559, guid: a0453466cf5c81145b425907dfb03fe4, type: 3}
   maxHealth: 100
   currentHealth: 100
+  collisionDamage: 20
 --- !u!114 &2549630634821596374
 MonoBehaviour:
   m_ObjectHideFlags: 0
