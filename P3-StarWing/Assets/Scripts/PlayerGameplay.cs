@@ -1,8 +1,8 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerGameplay : MonoBehaviour
 {
-    // Atributs per al moviment i rotació
     public float movementSpeed = 8f;
     public float initialSpeed = 0f;
     public float acceleration = 3f;
@@ -16,120 +16,147 @@ public class PlayerGameplay : MonoBehaviour
     public ParticleSystem accelerationParticles;
     private Quaternion targetRotation;
 
-    // Atributs per al dispar de projectils
     private ProjectileShooter projectileShooter;
     public Transform singleFirePoint;
     public Transform[] doubleFirePoint;
     private bool isDoubleShot = false;
 
-    // Atributs per al llançament de bombes
     public GameObject bombPrefab;
     public Transform bombSpawnPoint;
 
-    // Atributs per al cooldown
     private CooldownLogic cooldownLogic;
+    public Transform cameraTransform;  // Referencia a la cámara
+    public float followSpeed = 7f; // Velocidad de seguimiento de la cámara
+    public float returnToZeroSpeed = 1.5f; // Velocidad de retorno a 0°
+    public float verticalRotationLimit = 15f; // Límite de rotación vertical (pitch)
+    public float horizontalRotationLimit = 45f; // Aumentar límite de rotación horizontal
 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
-        targetRotation = transform.rotation; // Inicialitza la rotació objectiu
-        initialSpeed = movementSpeed; // Guardem la velocitat inicial
+        targetRotation = transform.rotation;
+        initialSpeed = movementSpeed;
 
         projectileShooter = GetComponent<ProjectileShooter>();
-        //accelerationParticles = GetComponent<ParticleSystem>();
-        cooldownLogic = Object.FindFirstObjectByType<CooldownLogic>(); // Busca la lógica de cooldown en la escena
+        cooldownLogic = Object.FindFirstObjectByType<CooldownLogic>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // Moviment cap endavant per defecte
-        transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
-
-        // Acceleració
-        if (Input.GetKey(KeyCode.W))
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        if (currentSceneName == "XaviLevel2")
         {
-            movementSpeed += acceleration * Time.deltaTime; // Augmenta la velocitat
-            movementSpeed = Mathf.Clamp(movementSpeed, minSpeed, maxSpeed); // Limita la velocitat dins dels marges
-
-            accelerationParticles.Play(); // Iniciem el sistema de partícules que representa l'acceleració
-        }
-
-        // Frenada/desacceleració
-        else if (Input.GetKey(KeyCode.S))
-        {
-            movementSpeed -= deceleration * Time.deltaTime; // Redueix la velocitat
-            movementSpeed = Mathf.Clamp(movementSpeed, minSpeed, maxSpeed); // Limita perquè no es mogui enrere ni s'aturi per complet
-        }
-
-        else // En cas de deixar d'accelerar/frenar hem de tornar a la velocitat inicial
-        {
-            if (movementSpeed > initialSpeed)
+            rotationSpeed = 1500f;
+            // Movilidad horizontal (Yaw - rotación sobre el eje Y)
+            float rotateHorizontal = 0;
+            if (Input.GetKey(KeyCode.A)) // Girar a la izquierda
             {
-                movementSpeed -= 4f * Time.deltaTime;
+                rotateHorizontal = -1;
             }
-            else if (movementSpeed < initialSpeed)
+            if (Input.GetKey(KeyCode.D)) // Girar a la derecha
             {
-                movementSpeed += 1f * Time.deltaTime;
+                rotateHorizontal = 1;
             }
 
-            accelerationParticles.Stop();
-        }
+            // Movilidad vertical (Pitch - rotación sobre el eje X)
+            float rotateVertical = 0;
+            if (Input.GetKey(KeyCode.W)) // Girar hacia arriba
+            {
+                rotateVertical = -1;
+            }
+            if (Input.GetKey(KeyCode.S)) // Girar hacia abajo
+            {
+                rotateVertical = 1;
+            }
 
+            // Obtener las rotaciones actuales de X e Y en el rango de -180 a 180
+            float currentRotationX = Mathf.DeltaAngle(0, transform.rotation.eulerAngles.x); // Normaliza X entre -180 y 180
+            float currentRotationY = Mathf.DeltaAngle(0, transform.rotation.eulerAngles.y); // Normaliza Y entre -180 y 180
 
+            // Limitar la rotación de X e Y en los rangos deseados
+            float newRotationX = Mathf.Clamp(currentRotationX + rotateVertical * rotationSpeed * Time.deltaTime, -15, 15); // Limitar rotación vertical (pitch)
+            float newRotationY = Mathf.Clamp(currentRotationY + rotateHorizontal * rotationSpeed * Time.deltaTime, -30, 30); // Limitar rotación horizontal (yaw)
 
-        // Moviment cap a l'esquerra/dreta (rotació horitzontal - yaw)
-        float rotateHorizontal = 0;
-        if (Input.GetKey(KeyCode.A)) // Gir a l'esquerra (yaw)
-        {
-            rotateHorizontal = -1;
-            transform.Translate(Vector3.left * movementSpeed * 0.25f * Time.deltaTime); // lleuger desplaçament cap a l'esquerra
-            targetRotation *= Quaternion.Euler(0, 0, rotationSpeed * 0.5f * Time.deltaTime); // lleugera rotació roll per donar efecte
-        }
-        if (Input.GetKey(KeyCode.D)) // Gir a la dreta (yaw)
-        {
-            rotateHorizontal = 1;
-            transform.Translate(Vector3.right * movementSpeed * 0.25f * Time.deltaTime); // lleuger desplaçament cap a la dreta
-            targetRotation *= Quaternion.Euler(0, 0, -rotationSpeed * 0.5f * Time.deltaTime); // lleugera rotació roll per donar efecte
-        }
-        if (rotateHorizontal != 0)
-        {
-            targetRotation *= Quaternion.Euler(0, rotateHorizontal * rotationSpeed * Time.deltaTime, 0);
-        }
+            // Recalcular la rotación objetivo con las nuevas rotaciones limitadas
+            targetRotation = Quaternion.Euler(newRotationX, newRotationY, transform.rotation.eulerAngles.z); // Mantener Z igual
 
-        // Rotació vertical - pitch (pujar/baixar)
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            targetRotation *= Quaternion.Euler(-rotationSpeed * 1.25f * Time.deltaTime, 0, 0);
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            targetRotation *= Quaternion.Euler(rotationSpeed * 1.25f * Time.deltaTime, 0, 0);
-        }
+            // Interpolación para suavizar la rotación de la nave
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * lerpSpeed);
 
-        // Rotació de roll ràpida ("barrell roll")
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            targetRotation *= Quaternion.Euler(0, 0, rotationSpeed * 20 * Time.deltaTime);
+            // La cámara sigue la rotación de la nave con interpolación suave
+            cameraTransform.rotation = Quaternion.Lerp(cameraTransform.rotation, transform.rotation, followSpeed * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        else
         {
-            targetRotation *= Quaternion.Euler(0, 0, -rotationSpeed * 20 * Time.deltaTime);
+            if (Input.GetKey(KeyCode.Q))
+            {
+                movementSpeed = Mathf.Max(minSpeed, movementSpeed - acceleration * Time.deltaTime);
+            }
+            if (Input.GetKey(KeyCode.E))
+            {
+                movementSpeed = Mathf.Min(maxSpeed, movementSpeed + acceleration * Time.deltaTime);
+            }
+
+            transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
+
+            float rotateVertical = 0;
+            if (Input.GetKey(KeyCode.W))
+            {
+                rotateVertical = -1;
+                transform.Translate(Vector3.up * movementSpeed * 0.5f * Time.deltaTime);
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                rotateVertical = 1;
+                transform.Translate(Vector3.down * movementSpeed * 0.5f * Time.deltaTime);
+            }
+
+            float rotateHorizontal = 0;
+            if (Input.GetKey(KeyCode.A))
+            {
+                rotateHorizontal = -1;
+                transform.Translate(Vector3.left * movementSpeed * 0.5f * Time.deltaTime);
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                rotateHorizontal = 1;
+                transform.Translate(Vector3.right * movementSpeed * 0.5f * Time.deltaTime);
+            }
+
+            if (rotateHorizontal != 0)
+            {
+                targetRotation *= Quaternion.Euler(0, rotateHorizontal * rotationSpeed * Time.deltaTime, 0);
+                float yaw = targetRotation.eulerAngles.y;
+                yaw = Mathf.Clamp(Mathf.DeltaAngle(0, yaw), -horizontalRotationLimit, horizontalRotationLimit);
+                targetRotation = Quaternion.Euler(targetRotation.eulerAngles.x, yaw, targetRotation.eulerAngles.z);
+            }
+            else
+            {
+                Quaternion zeroYawRotation = Quaternion.Euler(transform.eulerAngles.x, 0, transform.eulerAngles.z);
+                targetRotation = Quaternion.Lerp(transform.rotation, zeroYawRotation, returnToZeroSpeed * Time.deltaTime);
+            }
+
+            if (rotateVertical != 0)
+            {
+                targetRotation *= Quaternion.Euler(rotateVertical * rotationSpeed * Time.deltaTime, 0, 0);
+                float pitch = targetRotation.eulerAngles.x;
+                pitch = Mathf.Clamp(Mathf.DeltaAngle(0, pitch), -verticalRotationLimit, verticalRotationLimit);
+                targetRotation = Quaternion.Euler(pitch, targetRotation.eulerAngles.y, targetRotation.eulerAngles.z);
+            }
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * lerpSpeed);
         }
-
-        // Apliquem rotació suavitzada amb Lerp
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * lerpSpeed);
-
 
         // DISPAR DEL PROJECTIL - BOTÓ ESQUERRA DEL RATOLÍ
-        if (Input.GetMouseButtonDown(0)) 
+        if (Input.GetMouseButtonDown(0))
         {
             if (!isDoubleShot)
             {
                 projectileShooter.firePoint = singleFirePoint;
                 projectileShooter.ShootProjectile(true);
-            } else
+            }
+            else
             {
                 foreach (Transform firePoint in doubleFirePoint)
                 {
@@ -137,7 +164,6 @@ public class PlayerGameplay : MonoBehaviour
                     projectileShooter.ShootProjectile(true);
                 }
             }
-            
         }
 
         // LLANÇAR BOMBA - BOTÓ ESPAI
@@ -153,14 +179,11 @@ public class PlayerGameplay : MonoBehaviour
         {
             if (bombPrefab != null && bombSpawnPoint != null)
             {
-                // Instanciar la bomba al punto designado
                 GameObject bomb = Instantiate(bombPrefab, bombSpawnPoint.position, Quaternion.identity);
-
-                // Añadir fuerza inicial a la bomba (opcional)
                 Rigidbody rb = bomb.GetComponent<Rigidbody>();
                 if (rb != null)
                 {
-                    rb.linearVelocity = Vector3.down; // * bombDropForce;
+                    rb.linearVelocity = Vector3.down; // Aplicar fuerza hacia abajo
                 }
             }
         }
@@ -170,22 +193,9 @@ public class PlayerGameplay : MonoBehaviour
         }
     }
 
-
     public void SetDoubleShotMode(bool enable)
     {
         isDoubleShot = enable;
         Debug.Log(isDoubleShot ? "Dispar doble activat!" : "Dispar únic restaurat.");
     }
-
-    /*public float detectionRange = 10f; // Radi del rang de detecció
-    public Color gizmoColor = Color.blue; // Color de la esfera
-
-    private void OnDrawGizmosSelected()
-    {
-        // Canviar el color del Gizmo
-        Gizmos.color = gizmoColor;
-
-        // Dibuixar una esfera a la posició de l'objecte amb el radi definit
-        Gizmos.DrawWireSphere(transform.position, detectionRange);
-    }*/
 }
