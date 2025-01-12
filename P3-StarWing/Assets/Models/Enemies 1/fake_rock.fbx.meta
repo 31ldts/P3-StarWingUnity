@@ -3,7 +3,17 @@ guid: 82f4b4dee423d0441a8632d60515d34e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: fakerock
+    second: {fileID: 2800000, guid: d3458c2ea74d2774ca982cc134ca2cd8, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: silver2
+    second: {fileID: 2800000, guid: e7147779fbe30884589fc87922112df4, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

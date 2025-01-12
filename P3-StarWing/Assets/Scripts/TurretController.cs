@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class TurretController : MonoBehaviour
 {
-    public Transform player; // Referència a la nau del jugador
+    public Transform player; // Referï¿½ncia a la nau del jugador
 
-    public float detectionRange = 50f; // Distància màxima per detectar el jugador
-    public float rotationSpeed = 15f; // Velocitat de rotació de la torreta
+    public float detectionRange = 50f; // Distï¿½ncia mï¿½xima per detectar el jugador
+    public float rotationSpeed = 15f; // Velocitat de rotaciï¿½ de la torreta
     public float fireRate = 1f; // Velocitat de dispar dels projectils (un cada X segons)
     private float fireCooldown = 0.5f; // Temporitzador de dispar
 
@@ -13,6 +13,7 @@ public class TurretController : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.FindWithTag("Player").transform;
         projectileShooter = GetComponent<ProjectileShooter>();
     }
 
@@ -20,14 +21,14 @@ public class TurretController : MonoBehaviour
     {
         if (player != null)
         {
-            // Calcula la distància al jugador
+            // Calcula la distï¿½ncia al jugador
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-            // Comprova si el jugador és dins del rang establert i davant la torreta
+            // Comprova si el jugador ï¿½s dins del rang establert i davant la torreta
             if (distanceToPlayer <= detectionRange && player.position.z < transform.position.z)
             {
                 // Fer que la torreta apunti cap a la nau
-                Vector3 direction = (player.position - transform.position).normalized; // Direcció cap a la nau
+                Vector3 direction = (player.position - transform.position).normalized; // Direcciï¿½ cap a la nau
                 Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, direction.y, direction.z));
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
 
@@ -36,7 +37,7 @@ public class TurretController : MonoBehaviour
                 if (fireCooldown <= 0f)// && IsAimingAtPlayer(lookRotation))
                 {
                     projectileShooter.ShootProjectile(false);
-                    fireCooldown = fireRate; // Calcula el següent dispar
+                    fireCooldown = fireRate; // Calcula el segï¿½ent dispar
                 }
             }
         }        
@@ -46,7 +47,7 @@ public class TurretController : MonoBehaviour
     {
         Gizmos.color = Color.red;
 
-        // Dibuixa un cercle representant el rang de detecció
+        // Dibuixa un cercle representant el rang de detecciï¿½
         Gizmos.DrawWireSphere(transform.position, detectionRange);
     }
 }

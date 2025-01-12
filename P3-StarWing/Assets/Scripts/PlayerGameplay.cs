@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections; // Necesario para IEnumerator y coroutines
+
 
 public class PlayerGameplay : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class PlayerGameplay : MonoBehaviour
 
     public ParticleSystem accelerationParticles;
     private Quaternion targetRotation;
+    Rigidbody rb;
 
     private ProjectileShooter projectileShooter;
     public Transform singleFirePoint;
@@ -26,10 +29,18 @@ public class PlayerGameplay : MonoBehaviour
 
     private CooldownLogic cooldownLogic;
     public Transform cameraTransform;  // Referencia a la cámara
+    public Vector3 cameraOffset; // Offset de la cámara con respecto a la nave
+
     public float followSpeed = 7f; // Velocidad de seguimiento de la cámara
     public float returnToZeroSpeed = 1.5f; // Velocidad de retorno a 0°
     public float verticalRotationLimit = 15f; // Límite de rotación vertical (pitch)
     public float horizontalRotationLimit = 45f; // Aumentar límite de rotación horizontal
+    float rotateHorizontal;
+    float rotateVertical;
+    bool isRolling = false;
+    string lastKey = ""; // Variable para registrar la última tecla pulsada ('A' o 'D')
+    public float transportBackDistance = 15f; // Distancia hacia atrás para transportar la nave
+    public float resetDuration = 0.5f; // Duración del ajuste de la orientación
 
 
 
@@ -37,9 +48,10 @@ public class PlayerGameplay : MonoBehaviour
     {
         targetRotation = transform.rotation;
         initialSpeed = movementSpeed;
-
+        rb = GetComponent<Rigidbody>();
         projectileShooter = GetComponent<ProjectileShooter>();
         cooldownLogic = Object.FindFirstObjectByType<CooldownLogic>();
+        cameraOffset = cameraTransform.position - transform.position;
     }
 
     void Update()
@@ -89,16 +101,30 @@ public class PlayerGameplay : MonoBehaviour
         }
         else
         {
+            float returnToNeutralSpeed = 2f; // Velocidad de retorno a la rotación neutral
+
+            transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
+
             if (Input.GetKey(KeyCode.Q))
             {
                 movementSpeed = Mathf.Max(minSpeed, movementSpeed - acceleration * Time.deltaTime);
             }
-            if (Input.GetKey(KeyCode.E))
+            else if (Input.GetKey(KeyCode.E))
             {
                 movementSpeed = Mathf.Min(maxSpeed, movementSpeed + acceleration * Time.deltaTime);
             }
-
-            transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
+            else
+            {
+                if (movementSpeed > initialSpeed)
+                {
+                    movementSpeed -= 4f * Time.deltaTime;
+                }
+                else
+                {
+                    movementSpeed += 1f * Time.deltaTime;
+                }
+                accelerationParticles.Stop();
+            }
 
             float rotateVertical = 0;
             if (Input.GetKey(KeyCode.W))
@@ -115,15 +141,32 @@ public class PlayerGameplay : MonoBehaviour
             float rotateHorizontal = 0;
             if (Input.GetKey(KeyCode.A))
             {
+                lastKey = "A";
                 rotateHorizontal = -1;
                 transform.Translate(Vector3.left * movementSpeed * 0.5f * Time.deltaTime);
             }
             if (Input.GetKey(KeyCode.D))
             {
+                lastKey = "D";
                 rotateHorizontal = 1;
                 transform.Translate(Vector3.right * movementSpeed * 0.5f * Time.deltaTime);
             }
 
+            // Variables para controlar la inclinación
+            float rollAngle = 15f; // Ángulo de inclinación máxima
+            float rollSpeed = 5f;  // Velocidad de interpolación para la inclinación
+
+            // Inclinación en el eje Z según el movimiento horizontal
+            float targetRoll = 0f;
+            if (rotateHorizontal != 0)
+            {
+                targetRoll = rotateHorizontal * -rollAngle;
+            }
+
+            Quaternion targetZRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, targetRoll);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetZRotation, rollSpeed * Time.deltaTime);
+
+            // Rotación en el eje Y (yaw)
             if (rotateHorizontal != 0)
             {
                 targetRotation *= Quaternion.Euler(0, rotateHorizontal * rotationSpeed * Time.deltaTime, 0);
@@ -137,6 +180,7 @@ public class PlayerGameplay : MonoBehaviour
                 targetRotation = Quaternion.Lerp(transform.rotation, zeroYawRotation, returnToZeroSpeed * Time.deltaTime);
             }
 
+            // Rotación en el eje X (pitch)
             if (rotateVertical != 0)
             {
                 targetRotation *= Quaternion.Euler(rotateVertical * rotationSpeed * Time.deltaTime, 0, 0);
@@ -146,6 +190,20 @@ public class PlayerGameplay : MonoBehaviour
             }
 
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * lerpSpeed);
+            if (Input.GetKeyDown(KeyCode.Space) && !isRolling)
+            {
+                StartCoroutine(PerformBarrelRoll());
+            }
+
+            // Verificar si no se presionan teclas de movimiento para retornar a la orientación adecuada en X y Z
+            if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S))
+            {
+                float currentYRotation = transform.eulerAngles.y; // Conservar la rotación en Y
+                Quaternion targetRotation = Quaternion.Euler(0, currentYRotation, 0); // Rotación neutra en X y Z
+
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * returnToNeutralSpeed);
+            }
+
         }
 
         // DISPAR DEL PROJECTIL - BOTÓ ESQUERRA DEL RATOLÍ
@@ -192,7 +250,60 @@ public class PlayerGameplay : MonoBehaviour
             Debug.Log("No puedes lanzar una bomba, el cooldown no está listo.");
         }
     }
+    IEnumerator PerformBarrelRoll()
+    {
+        isRolling = true;
 
+        // Determina la dirección del barrel roll basado en la última tecla pulsada
+        float direction = (lastKey == "D") ? -1f : 1f;
+        yield return StartCoroutine(BarrelRoll(1.0f, direction));
+
+        isRolling = false;
+    }
+
+    IEnumerator BarrelRoll(float duration, float direction)
+    {
+        float startRotation = transform.eulerAngles.z;
+        float endRotation = startRotation + (360.0f * direction);
+        float elapsed = 0.0f;
+
+        while (elapsed < duration)
+        {
+            float zRotation = Mathf.Lerp(startRotation, endRotation, elapsed / duration) % 360.0f;
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, zRotation);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, startRotation);
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Wall")) // Verifica si el objeto tiene el tag "Wall"
+        {
+            // Transporta la nave hacia atrás
+            Vector3 backDirection = -transform.forward;
+            transform.position += backDirection * transportBackDistance;
+            cameraTransform.position = transform.position + cameraOffset;
+            // Restablece la orientación de la nave
+            Quaternion targetRotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+            StartCoroutine(ResetRotation(targetRotation, resetDuration));
+        }
+    }
+    IEnumerator ResetRotation(Quaternion targetRotation, float duration)
+    {
+        float elapsed = 0f;
+        Quaternion initialRotation = transform.rotation;
+
+        while (elapsed < duration)
+        {
+            transform.rotation = Quaternion.Lerp(initialRotation, targetRotation, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.rotation = targetRotation;
+    }
     public void SetDoubleShotMode(bool enable)
     {
         isDoubleShot = enable;

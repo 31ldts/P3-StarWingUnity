@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 855665152147504577}
   m_Layer: 0
   m_Name: PortaFinal
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -153,6 +153,7 @@ MonoBehaviour:
   comportaDreta: {fileID: 4609095575016644640}
   distancia: 20
   velocitat: 5
+  lifeComponent: {fileID: 0}
 --- !u!65 &855665152147504577
 BoxCollider:
   m_ObjectHideFlags: 0
