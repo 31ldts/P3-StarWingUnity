@@ -21,8 +21,7 @@ public class LifeComponent : MonoBehaviour
             {
                 heartsLogic = Object.FindFirstObjectByType<HeartsLogic>();
                 experienceLogic = Object.FindFirstObjectByType<ExperienceLogic>();
-                //experienceLogic.AddTotalExperience(1200);
-                experienceLogic.AddTotalExperience(200);
+                experienceLogic.AddTotalExperience(1000);
             } else {
                 experienceLogic = Object.FindFirstObjectByType<ExperienceLogic>();
             }
