@@ -12,6 +12,7 @@ TagManager:
   - Projectile
   - Ground
   - Asteroid
+  - Boss
   layers:
   - Default
   - TransparentFX
