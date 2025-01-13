@@ -15,19 +15,27 @@ public class LifeComponent : MonoBehaviour
 
     void Start()
     {
-        if (gameObject.CompareTag("Player"))
-        {
-            heartsLogic = Object.FindFirstObjectByType<HeartsLogic>();
-        }
-        else
-        {
-            // Se entiende que el resto son enemigos
-            experienceLogic = Object.FindFirstObjectByType<ExperienceLogic>();
-            experienceLogic.AddTotalExperience(maxHealth);
-        }
         string currentSceneName = SceneManager.GetActiveScene().name;
         if (currentSceneName == "XaviLevel2"){
-            experienceLogic.AddTotalExperience(500);
+            if (gameObject.CompareTag("Player"))
+            {
+                heartsLogic = Object.FindFirstObjectByType<HeartsLogic>();
+                experienceLogic = Object.FindFirstObjectByType<ExperienceLogic>();
+                experienceLogic.AddTotalExperience(1200);
+            } else {
+                experienceLogic = Object.FindFirstObjectByType<ExperienceLogic>();
+            }
+        } else {
+            if (gameObject.CompareTag("Player"))
+            {
+                heartsLogic = Object.FindFirstObjectByType<HeartsLogic>();
+            }
+            else
+            {
+                // Se entiende que el resto son enemigos
+                experienceLogic = Object.FindFirstObjectByType<ExperienceLogic>();
+                experienceLogic.AddTotalExperience(maxHealth);
+            }
         }
     }
 

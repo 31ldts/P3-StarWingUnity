@@ -12,49 +12,60 @@ public class PrefabSpawner : MonoBehaviour
     public Vector2 rotationSpeedRange = new Vector2(5f, 15f); // Rango de velocidad de rotación
 
     private Transform cameraTransform;
+    public Transform naveTransform;
+    private ExperienceLogic experienceLogic;
 
     void Start()
     {
         cameraTransform = Camera.main.transform;
         InvokeRepeating("SpawnPrefab", 0f, spawnInterval);
+        experienceLogic = Object.FindFirstObjectByType<ExperienceLogic>();
     }
 
     void SpawnPrefab()
     {
-        if (prefabs.Length == 0)
-        {
-            Debug.LogWarning("No prefabs assigned!");
-            return;
+        if(experienceLogic.getTotalExperience()<1){
+            if (prefabs.Length == 0)
+            {
+                Debug.LogWarning("No prefabs assigned!");
+                return;
+            }
+
+            // Seleccionar un prefab aleatorio
+            int randomIndex = Random.Range(0, prefabs.Length-1);
+            GameObject prefab = prefabs[randomIndex];
+
+            // Generar posiciones aleatorias en los planos X y Y
+            float randomX = Random.Range(spawnRangeX.x, spawnRangeX.y);
+            float randomY = Random.Range(spawnRangeY.x, spawnRangeY.y);
+
+            // Establecer la posición de generación basada en la distancia desde la cámara
+            Vector3 spawnPosition = new Vector3(randomX, randomY, cameraTransform.position.z + spawnDistance);
+
+            // Generar una rotación aleatoria
+            Quaternion randomRotation = Random.rotation;
+
+            // Instanciar el prefab en la posición generada con rotación aleatoria
+            GameObject spawnedPrefab = Instantiate(prefab, spawnPosition, randomRotation);
+
+            // Generar una escala aleatoria
+            float randomScale = Random.Range(scaleRange.x, scaleRange.y);
+            spawnedPrefab.transform.localScale = Vector3.one * randomScale;
+
+            // Añadir el componente para mover el prefab en el eje Z
+            spawnedPrefab.AddComponent<MoveInZDirection>().SetSpeed(moveSpeed);
+
+            // Añadir el componente para rotación aleatoria
+            float randomRotationSpeed = Random.Range(rotationSpeedRange.x, rotationSpeedRange.y);
+            spawnedPrefab.AddComponent<RandomRotation>().SetRotationSpeed(randomRotationSpeed);
+        } else {
+            CancelInvoke("SpawnPrefab");
+            GameObject prefab = prefabs[prefabs.Length-1];    //Puerta
+            Vector3 spawnPosition = naveTransform.position + naveTransform.forward * 70f;
+            Instantiate(prefab, spawnPosition, Quaternion.identity);
         }
-
-        // Seleccionar un prefab aleatorio
-        int randomIndex = Random.Range(0, prefabs.Length);
-        GameObject prefab = prefabs[randomIndex];
-
-        // Generar posiciones aleatorias en los planos X y Y
-        float randomX = Random.Range(spawnRangeX.x, spawnRangeX.y);
-        float randomY = Random.Range(spawnRangeY.x, spawnRangeY.y);
-
-        // Establecer la posición de generación basada en la distancia desde la cámara
-        Vector3 spawnPosition = new Vector3(randomX, randomY, cameraTransform.position.z + spawnDistance);
-
-        // Generar una rotación aleatoria
-        Quaternion randomRotation = Random.rotation;
-
-        // Instanciar el prefab en la posición generada con rotación aleatoria
-        GameObject spawnedPrefab = Instantiate(prefab, spawnPosition, randomRotation);
-
-        // Generar una escala aleatoria
-        float randomScale = Random.Range(scaleRange.x, scaleRange.y);
-        spawnedPrefab.transform.localScale = Vector3.one * randomScale;
-
-        // Añadir el componente para mover el prefab en el eje Z
-        spawnedPrefab.AddComponent<MoveInZDirection>().SetSpeed(moveSpeed);
-
-        // Añadir el componente para rotación aleatoria
-        float randomRotationSpeed = Random.Range(rotationSpeedRange.x, rotationSpeedRange.y);
-        spawnedPrefab.AddComponent<RandomRotation>().SetRotationSpeed(randomRotationSpeed);
     }
+        
 }
 
 public class MoveInZDirection : MonoBehaviour
