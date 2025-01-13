@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class SceneManagementHandler : MonoBehaviour
 {
@@ -38,14 +39,36 @@ public class SceneManagementHandler : MonoBehaviour
                 Debug.Log("COMPLETAT!");
                 if (currentScene.name == lvl1)
                 {
+                    CompleteLevel(1);
                     SceneManager.LoadScene(lvl2);
                 }
                 else if (currentScene.name == lvl2)
                 {
+                    CompleteLevel(2);
                     SceneManager.LoadScene(lvl3);
                 }
             }
         }
+    }
+
+    private void CompleteLevel(int levelIndex)
+    {
+        string filePath = "Assets/Resources/LevelConfig.txt";
+
+        string[] lines = File.ReadAllLines(filePath);
+        levelIndex = levelIndex - 1;
+
+        if (levelIndex < lines.Length)
+        {
+            lines[levelIndex] = "4";
+        }
+
+        if (levelIndex + 1 < lines.Length)
+        {
+            lines[levelIndex + 1] = "1";
+        }
+
+        File.WriteAllLines(filePath, lines);
     }
 
     public static void ChangeScene(GameObject invoker, int levelIndex, string shipName)
