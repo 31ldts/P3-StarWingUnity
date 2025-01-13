@@ -14,12 +14,14 @@ public class EnemySpawner : MonoBehaviour
     public int maxEnemies = 3;         // Número máximo de enemigos en la escena
 
     private Transform playerTransform;
+    private ExperienceLogic experienceLogic;
 
     void Start()
     {
         playerTransform = Camera.main.transform; // Supone que la cámara es el jugador
         InvokeRepeating("SpawnEnemy", 0f, spawnInterval);
         stopDistance = Random.Range(50, 55);
+        experienceLogic = Object.FindFirstObjectByType<ExperienceLogic>();
     }
 
     void SpawnEnemy()
@@ -59,6 +61,19 @@ public class EnemySpawner : MonoBehaviour
 
         // Añadir el componente para mover el enemigo en el eje Z y luego aleatoriamente en X e Y
         spawnedEnemy.AddComponent<EnemyMovement>().Initialize(moveSpeed, stopDistance, playerTransform);
+
+
+        if(experienceLogic.getTotalExperience()>=1){
+            CancelInvoke("SpawnEnemy");
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            // Iterar y destruir cada enemigo encontrado
+            foreach (GameObject enemy in enemies)
+            {
+                Destroy(enemy);
+            }
+        }
+
+
     }
 }
 

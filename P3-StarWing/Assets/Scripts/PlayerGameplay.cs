@@ -41,7 +41,7 @@ public class PlayerGameplay : MonoBehaviour
     string lastKey = ""; // Variable para registrar la última tecla pulsada ('A' o 'D')
     public float transportBackDistance = 15f; // Distancia hacia atrás para transportar la nave
     public float resetDuration = 0.5f; // Duración del ajuste de la orientación
-
+    private ExperienceLogic experienceLogic;
 
 
     void Start()
@@ -52,6 +52,7 @@ public class PlayerGameplay : MonoBehaviour
         projectileShooter = GetComponent<ProjectileShooter>();
         cooldownLogic = Object.FindFirstObjectByType<CooldownLogic>();
         cameraOffset = cameraTransform.position - transform.position;
+        experienceLogic = Object.FindFirstObjectByType<ExperienceLogic>();
     }
 
     void Update()
@@ -59,49 +60,54 @@ public class PlayerGameplay : MonoBehaviour
         string currentSceneName = SceneManager.GetActiveScene().name;
         if (currentSceneName == "XaviLevel2")
         {
-            Rigidbody rb = GetComponent<Rigidbody>();
+            if(experienceLogic.getTotalExperience()<1){
+                Rigidbody rb = GetComponent<Rigidbody>();
 
-            // Activar isKinematic
-            rb.isKinematic = true;  // Esto desactiva la física y permite moverlo manualmente
-            rotationSpeed = 1600f;
-            // Movilidad horizontal (Yaw - rotación sobre el eje Y)
-            float rotateHorizontal = 0;
-            if (Input.GetKey(KeyCode.A)) // Girar a la izquierda
-            {
-                rotateHorizontal = -1;
+                // Activar isKinematic
+                rb.isKinematic = true;  // Esto desactiva la física y permite moverlo manualmente
+                rotationSpeed = 1600f;
+                // Movilidad horizontal (Yaw - rotación sobre el eje Y)
+                float rotateHorizontal = 0;
+                if (Input.GetKey(KeyCode.A)) // Girar a la izquierda
+                {
+                    rotateHorizontal = -1;
+                }
+                if (Input.GetKey(KeyCode.D)) // Girar a la derecha
+                {
+                    rotateHorizontal = 1;
+                }
+
+                // Movilidad vertical (Pitch - rotación sobre el eje X)
+                float rotateVertical = 0;
+                if (Input.GetKey(KeyCode.W)) // Girar hacia arriba
+                {
+                    rotateVertical = -1;
+                }
+                if (Input.GetKey(KeyCode.S)) // Girar hacia abajo
+                {
+                    rotateVertical = 1;
+                }
+
+                // Obtener las rotaciones actuales de X e Y en el rango de -180 a 180
+                float currentRotationX = Mathf.DeltaAngle(0, transform.rotation.eulerAngles.x); // Normaliza X entre -180 y 180
+                float currentRotationY = Mathf.DeltaAngle(0, transform.rotation.eulerAngles.y); // Normaliza Y entre -180 y 180
+
+                // Limitar la rotación de X e Y en los rangos deseados
+                float newRotationX = Mathf.Clamp(currentRotationX + rotateVertical * rotationSpeed * Time.deltaTime, -15, 15); // Limitar rotación vertical (pitch)
+                float newRotationY = Mathf.Clamp(currentRotationY + rotateHorizontal * rotationSpeed * Time.deltaTime, -30, 30); // Limitar rotación horizontal (yaw)
+
+                // Recalcular la rotación objetivo con las nuevas rotaciones limitadas
+                targetRotation = Quaternion.Euler(newRotationX, newRotationY, transform.rotation.eulerAngles.z); // Mantener Z igual
+
+                // Interpolación para suavizar la rotación de la nave
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * lerpSpeed);
+
+                // La cámara sigue la rotación de la nave con interpolación suave
+                cameraTransform.rotation = Quaternion.Lerp(cameraTransform.rotation, transform.rotation, followSpeed * Time.deltaTime);
+            } else {
+                
+                transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
             }
-            if (Input.GetKey(KeyCode.D)) // Girar a la derecha
-            {
-                rotateHorizontal = 1;
-            }
-
-            // Movilidad vertical (Pitch - rotación sobre el eje X)
-            float rotateVertical = 0;
-            if (Input.GetKey(KeyCode.W)) // Girar hacia arriba
-            {
-                rotateVertical = -1;
-            }
-            if (Input.GetKey(KeyCode.S)) // Girar hacia abajo
-            {
-                rotateVertical = 1;
-            }
-
-            // Obtener las rotaciones actuales de X e Y en el rango de -180 a 180
-            float currentRotationX = Mathf.DeltaAngle(0, transform.rotation.eulerAngles.x); // Normaliza X entre -180 y 180
-            float currentRotationY = Mathf.DeltaAngle(0, transform.rotation.eulerAngles.y); // Normaliza Y entre -180 y 180
-
-            // Limitar la rotación de X e Y en los rangos deseados
-            float newRotationX = Mathf.Clamp(currentRotationX + rotateVertical * rotationSpeed * Time.deltaTime, -15, 15); // Limitar rotación vertical (pitch)
-            float newRotationY = Mathf.Clamp(currentRotationY + rotateHorizontal * rotationSpeed * Time.deltaTime, -30, 30); // Limitar rotación horizontal (yaw)
-
-            // Recalcular la rotación objetivo con las nuevas rotaciones limitadas
-            targetRotation = Quaternion.Euler(newRotationX, newRotationY, transform.rotation.eulerAngles.z); // Mantener Z igual
-
-            // Interpolación para suavizar la rotación de la nave
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * lerpSpeed);
-
-            // La cámara sigue la rotación de la nave con interpolación suave
-            cameraTransform.rotation = Quaternion.Lerp(cameraTransform.rotation, transform.rotation, followSpeed * Time.deltaTime);
         }
         else
         {
