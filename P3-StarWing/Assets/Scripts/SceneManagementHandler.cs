@@ -20,6 +20,10 @@ public class SceneManagementHandler : MonoBehaviour
 
         canvas = GetComponentInParent<Canvas>();
         lifeComponent = player.GetComponent<LifeComponent>();
+
+        Debug.Log($"Current Scene: {currentScene.name}");
+        Debug.Log($"Canvas: {canvas.name}");
+        Debug.Log(canvas.CompareTag("Completed"));
     }
 
     void Update()

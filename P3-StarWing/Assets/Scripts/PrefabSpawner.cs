@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PrefabSpawner : MonoBehaviour
 {
@@ -63,6 +64,9 @@ public class PrefabSpawner : MonoBehaviour
             GameObject prefab = prefabs[prefabs.Length-1];    //Puerta
             Vector3 spawnPosition = naveTransform.position + naveTransform.forward * 70f;
             Instantiate(prefab, spawnPosition, Quaternion.identity);
+            Scene currentScene = SceneManager.GetActiveScene();
+            Debug.Log(currentScene.name);
+            CanvasHandler.ActivateCanvas("Completed");
         }
     }
         
