@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 485922735477821792}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalPosition: {x: 0, y: -0.084, z: 1.68}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4972,7 +4972,6 @@ GameObject:
   - component: {fileID: 904554254288319496}
   - component: {fileID: 7414340542900041285}
   - component: {fileID: 154983874577110467}
-  - component: {fileID: 2549630634821596374}
   - component: {fileID: 1121219612606963360}
   m_Layer: 0
   m_Name: Player
@@ -5014,14 +5013,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77c0c60b573f64646b1765fc8d3e552f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 8
+  movementSpeed: 5
   initialSpeed: 0
   acceleration: 3
   deceleration: 2
   maxSpeed: 20
   minSpeed: 2
-  rotationSpeed: 10
-  lerpSpeed: 2
+  rotationSpeed: 20
+  lerpSpeed: 3
   accelerationParticles: {fileID: 609882795269467748}
   singleFirePoint: {fileID: 2869992247503220312}
   doubleFirePoint:
@@ -5200,19 +5199,6 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 100
   collisionDamage: 20
---- !u!114 &2549630634821596374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8399403252619660121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75c58707f9fd0a24a9449816e7b5dddd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageAmount: 20
 --- !u!54 &1121219612606963360
 Rigidbody:
   m_ObjectHideFlags: 0
