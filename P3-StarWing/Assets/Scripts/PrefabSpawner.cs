@@ -12,6 +12,8 @@ public class PrefabSpawner : MonoBehaviour
     public Vector2 scaleRange = new Vector2(0.8f, 1.2f); // Rango de escala aleatoria
     public Vector2 rotationSpeedRange = new Vector2(5f, 15f); // Rango de velocidad de rotación
 
+    public GameObject portaFinalPrefab;
+
     private Transform cameraTransform;
     public Transform naveTransform;
     private ExperienceLogic experienceLogic;
@@ -61,9 +63,10 @@ public class PrefabSpawner : MonoBehaviour
             spawnedPrefab.AddComponent<RandomRotation>().SetRotationSpeed(randomRotationSpeed);
         } else {
             CancelInvoke("SpawnPrefab");
-            GameObject prefab = prefabs[prefabs.Length-1];    //Puerta
+            //GameObject prefab = prefabs[prefabs.Length-1];    //Puerta
             Vector3 spawnPosition = naveTransform.position + naveTransform.forward * 70f;
-            Instantiate(prefab, spawnPosition, Quaternion.identity);
+            //Instantiate(prefab, spawnPosition, Quaternion.identity);
+            Instantiate(portaFinalPrefab, spawnPosition, Quaternion.identity);
             Scene currentScene = SceneManager.GetActiveScene();
             Debug.Log(currentScene.name);
             CanvasHandler.ActivateCanvas("Completed");
