@@ -29,7 +29,7 @@ public class OpenDoor : MonoBehaviour
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
         experienceLogic = Object.FindFirstObjectByType<ExperienceLogic>();
-        //lifeComponent = GetComponent<LifeComponent>();
+        lifeComponent = GameObject.FindGameObjectWithTag("Player").GetComponent<LifeComponent>();
     }
 
     // Update is called once per frame
@@ -81,8 +81,10 @@ public class OpenDoor : MonoBehaviour
             Debug.Log(numTriggers);
             if (numTriggers == 2)
             {
+                CanvasHandler.DeactivateCanvas("Completed");
                 // Pasamos de nivel
                 Scene currentScene = SceneManager.GetActiveScene();
+                Debug.Log(currentScene.name);
                 CanvasHandler.ActivateCanvas("Completed");
             }
             else if ((numTriggers == 1) && (experienceLogic.getTotalExperience() < 1.0f))

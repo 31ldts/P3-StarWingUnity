@@ -4,6 +4,7 @@ public class CanvasHandler : MonoBehaviour
 {
     public static void ActivateCanvas(string tag)
     {
+        Debug.Log(GetCanvas(tag).gameObject);
         GetCanvas(tag).gameObject.SetActive(true);
     }
 

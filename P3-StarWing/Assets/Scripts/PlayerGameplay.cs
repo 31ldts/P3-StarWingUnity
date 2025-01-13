@@ -58,7 +58,7 @@ public class PlayerGameplay : MonoBehaviour
     void Update()
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
-        if (currentSceneName == "XaviLevel2")
+        if (currentSceneName == "Level_2")
         {
             if(experienceLogic.getTotalExperience()<1){
                 Rigidbody rb = GetComponent<Rigidbody>();

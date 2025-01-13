@@ -6,25 +6,25 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/Unused/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: f1d57de91a3f23f3cb4b5d8f683372d2
   - enabled: 0
-    path: Assets/Scenes/IvanTestScene.unity
+    path: Assets/Scenes/Unused/IvanTestScene.unity
     guid: 6a025721a4296ce47a5ee6115388c433
   - enabled: 0
-    path: Assets/Scenes/HUD_Level_1.unity
+    path: Assets/Scenes/Unused/HUD_Level_1.unity
     guid: f5154edc8f28146bb81679778d1f8250
   - enabled: 1
-    path: Assets/Scenes/HUD2_Level1.unity
+    path: Assets/Scenes/Level_1.unity
     guid: 735ce8aca005c42458a0ff2dfc94ea28
   - enabled: 1
-    path: Assets/Scenes/XaviLevel2.unity
+    path: Assets/Scenes/Level_2.unity
     guid: bb93b886b752e354a983f0901223f4a8
   - enabled: 1
-    path: Assets/Scenes/NeusTestScene.unity
+    path: Assets/Scenes/Level_3.unity
     guid: ddaa7bbb2f09e7542ae4fa207ec5b99a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

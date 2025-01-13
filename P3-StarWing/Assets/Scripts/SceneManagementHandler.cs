@@ -7,9 +7,9 @@ public class SceneManagementHandler : MonoBehaviour
     private Canvas canvas;
     private LifeComponent lifeComponent;
 
-    private static string lvl1 = "HUD2_Level1";
-    private static string lvl2 = "XaviLevel2";
-    private static string lvl3 = "NeusTestScene";
+    private static string lvl1 = "Level_1";
+    private static string lvl2 = "Level_2";
+    private static string lvl3 = "Level_3";
 
     static Scene currentScene;
 

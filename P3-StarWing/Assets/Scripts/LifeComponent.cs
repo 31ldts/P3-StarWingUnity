@@ -16,12 +16,13 @@ public class LifeComponent : MonoBehaviour
     void Start()
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
-        if (currentSceneName == "XaviLevel2"){
+        if (currentSceneName == "Level_2"){
             if (gameObject.CompareTag("Player"))
             {
                 heartsLogic = Object.FindFirstObjectByType<HeartsLogic>();
                 experienceLogic = Object.FindFirstObjectByType<ExperienceLogic>();
-                experienceLogic.AddTotalExperience(1200);
+                //experienceLogic.AddTotalExperience(1200);
+                experienceLogic.AddTotalExperience(200);
             } else {
                 experienceLogic = Object.FindFirstObjectByType<ExperienceLogic>();
             }
