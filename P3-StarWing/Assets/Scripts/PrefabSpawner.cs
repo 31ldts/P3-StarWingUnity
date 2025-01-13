@@ -65,6 +65,12 @@ public class PrefabSpawner : MonoBehaviour
             CancelInvoke("SpawnPrefab");
             //GameObject prefab = prefabs[prefabs.Length-1];    //Puerta
             Vector3 spawnPosition = naveTransform.position + naveTransform.forward * 70f;
+            GameObject[] asteroids = GameObject.FindGameObjectsWithTag("Asteroid");
+            // Iterar y destruir cada asteroide encontrado
+            foreach (GameObject asteroid in asteroids)
+            {
+                Destroy(asteroid);
+            }
             //Instantiate(prefab, spawnPosition, Quaternion.identity);
             Instantiate(portaFinalPrefab, spawnPosition, Quaternion.identity);
             Scene currentScene = SceneManager.GetActiveScene();

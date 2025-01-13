@@ -79,7 +79,7 @@ public class LifeComponent : MonoBehaviour
         // Aplica daño o curación y restringe el resultado entre el valor mínimo y máximo
         currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
 
-        if (gameObject.CompareTag("Enemy") || gameObject.CompareTag("Asteroid")) {
+        if (gameObject.CompareTag("Enemy") || gameObject.CompareTag("Asteroid") || gameObject.CompareTag("Boss")) {
             experienceLogic.AddExperience(amount);
         }
 
