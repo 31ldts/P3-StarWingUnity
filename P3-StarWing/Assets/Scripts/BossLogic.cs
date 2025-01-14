@@ -4,11 +4,19 @@ using UnityEngine;
 public class BossLogic : MonoBehaviour
 {
     // MOVIMENT 
-    public float movementSpeed = 8f;
+    public float movementSpeed; //Moviment en Z
+    public float moveSpeed; //Moviment XY
     public float lookSpeed = 5f;
+    private PlayerGameplay playerGameplay; // Referencia al script PlayerGameplay
+
+    private InfinityMovement infinityMovement;
+
+
 
     // RAIG DESRTRUCTOR
-    public Transform player;            
+
+    public AudioSource beamAudioSource; // Referencia al AudioSource del rayo
+    public Transform player;
     public float detectionRange = 100f;
     public LineRenderer lineRenderer;   // LineRenderer que simula el raig
     public float beamDuration = 1.5f;   // Durada del raig (en segons)
@@ -17,12 +25,16 @@ public class BossLogic : MonoBehaviour
 
     public float beamTrackingDelay = 0.1f; // Temps entre actualitzacions del seguiment del raig
     public float aimOffset = 1f;
+    private float timer = 0f; // Acumulador de tiempo
 
     //public LayerMask damageLayer;       // Capes que poden rebre dany
 
     private float nextFireTime;
     private bool isFiring;
-    private Vector3 targetPosition;  // Posició objectiu del moviment
+    private Vector3 targetPosition;  // Posiciï¿½ objectiu del moviment
+
+    private Vector3 targetRandom;  // Posiciï¿½ objectiu del moviment
+
 
     void Start()
     { 
@@ -30,11 +42,47 @@ public class BossLogic : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
-        lineRenderer.enabled = false; // Assegura que el raig està desactivat inicialment
+        lineRenderer.enabled = false; // Assegura que el raig estï¿½ desactivat inicialment
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        // ObtÃ©n el componente PlayerGameplay del jugador
+        if (player != null)
+        {
+            playerGameplay = player.GetComponent<PlayerGameplay>();
+        }
+        InfinityMovement infinityMovement = GetComponent<InfinityMovement>();
+        if (infinityMovement == null)
+        {
+            Debug.Log("q es esto");
+            infinityMovement = gameObject.AddComponent<InfinityMovement>();
+        }
+        if (beamAudioSource == null)
+        {
+            beamAudioSource = GetComponent<AudioSource>();
+        }
+
+        // Configura los parÃ¡metros del movimiento en infinito
+        infinityMovement.speed = 1f;
+        infinityMovement.width = 20f;
+        infinityMovement.height = 12f;
+        infinityMovement.zSpeed = movementSpeed; // Usa la velocidad de alejamiento configurada en el boss
+        infinityMovement.smoothness = 10f;
+
+        // Asigna la referencia al jugador
+        infinityMovement.player = player.transform;
+        infinityMovement.zSpeed = movementSpeed;
+        
     }
 
     void Update()
     {
+            // Accede al componente infinityMovement en el Update
+        infinityMovement = GetComponent<InfinityMovement>();
+        movementSpeed = playerGameplay.movementSpeed+1;   //Sadapta a la velocitat del player
+        infinityMovement.zSpeed = movementSpeed;
+        
+        // Acumular el tiempo transcurrido
+        timer += Time.deltaTime;
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         //MoveTowardsPosition();
 
@@ -42,16 +90,29 @@ public class BossLogic : MonoBehaviour
         {
             // Seguiment del jugador
             LookAtPlayer();
-            MoveAwayFromPlayer();
+            
+
+            if (timer >= 4)     //Cada 4 segons moverse en infinito XY
+            {
+                infinityMovement.enabled = true;
+                if(timer >= 7){
+                    infinityMovement.enabled = false;
+                    timer = 0;
+                } 
+            } else {
+                Debug.Log("memue");
+                MoveAwayFromPlayer();
+            }
+            
 
             // Atac
             if (Time.time >= nextFireTime && !isFiring)
             {
+                Debug.Log("DISPARO DELIBRO SOCIO");
                 StartCoroutine(FireBeam());
             }
         }
     }
-
     public void ActiveBoss(bool active)
     {
         Debug.Log("YEEEE");
@@ -60,23 +121,14 @@ public class BossLogic : MonoBehaviour
 
     private void MoveAwayFromPlayer()
     {
-        // Direcció cap al jugador
-        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        // Calcular la direcciÃ³n desde el jugador hacia el jefe
+        Vector3 direction = (transform.position - player.position).normalized;
 
-        // Direcció contrària (cap enrere)
-        Vector3 retreatDirection = -directionToPlayer;
+        // Asegurarse de que el movimiento sea solo en el eje Z
+        direction = new Vector3(0, 0, direction.z);
 
-        // Moviment irregular al voltant de la direcció de retirada
-        Vector3 randomOffset = new Vector3(
-            Random.Range(0f, 4f),
-            Random.Range(0f, 2f), // Opcional, per si vols que el moviment vertical sigui menor
-            Random.Range(0f, 4f)
-        ).normalized;
-
-        Vector3 finalDirection = (retreatDirection + randomOffset).normalized;
-
-        // Mou el boss
-        transform.position += finalDirection * movementSpeed * Time.deltaTime;
+        // Mover al jefe usando movementSpeed
+        transform.position += direction * movementSpeed * Time.deltaTime;
     }
 
     private void LookAtPlayer()
@@ -90,11 +142,14 @@ public class BossLogic : MonoBehaviour
     private IEnumerator FireBeam()
     {
         isFiring = true;
-
+        if (beamAudioSource != null)
+        {
+            beamAudioSource.Play();
+        }
         // Activar el raig
         lineRenderer.enabled = true;
 
-        // Duració activa del raig
+        // Duraciï¿½ activa del raig
         float elapsedTime = 0f;
 
         while (elapsedTime < beamDuration)
@@ -102,14 +157,14 @@ public class BossLogic : MonoBehaviour
             // Configurar el LineRenderer per mostrar el raig
             lineRenderer.SetPosition(0, transform.position); // Inici del raig
 
-            // Crear una posició amb lleugera desviació
+            // Crear una posiciï¿½ amb lleugera desviaciï¿½
             Vector3 targetPosition = player.position + new Vector3(
                 Random.Range(-aimOffset, aimOffset),
                 Random.Range(-aimOffset, aimOffset),
                 Random.Range(-aimOffset, aimOffset)
             );
 
-            lineRenderer.SetPosition(1, targetPosition); // Direcció lleugerament desplaçada cap al jugador
+            lineRenderer.SetPosition(1, targetPosition); // Direcciï¿½ lleugerament desplaï¿½ada cap al jugador
 
             // Aplica dany al jugador si el raig el colpeja
             if (Physics.Raycast(transform.position, (targetPosition - transform.position).normalized, out RaycastHit hit, Mathf.Infinity)) //, damageLayer))
@@ -117,7 +172,7 @@ public class BossLogic : MonoBehaviour
                 LifeComponent lifeComponent = hit.collider.GetComponent<LifeComponent>();
                 if (lifeComponent != null)
                 {
-                    lifeComponent.doDamage(beamDamage * Time.deltaTime);
+                    lifeComponent.doDamage(beamDamage * 5 *Time.deltaTime);
                 }
             }
 
@@ -132,3 +187,45 @@ public class BossLogic : MonoBehaviour
         isFiring = false;
     }
 }
+
+
+public class InfinityMovement : MonoBehaviour
+{
+    public float speed = 0.5f;           // Velocidad del movimiento en infinito
+    public float width = 5f;          // Amplitud del eje X
+    public float height = 3f;         // Amplitud del eje Y
+    public float zSpeed = 2f;         // Velocidad de alejamiento en el eje Z
+    public float smoothness = 5f;     // Suavidad del movimiento
+
+    private float time = 0f;          // Temporizador para el movimiento
+    public Transform player;          // Referencia al jugador
+
+    void Update()
+    {
+        // Incrementar el tiempo segÃºn la velocidad
+        time += speed * Time.deltaTime;
+
+        // Movimiento en forma de infinito en XY
+        float x = Mathf.Sin(time) * width;
+        float y = Mathf.Sin(2 * time) / 2 * height;
+
+        // Alejarse del jugador en Z
+        float z = transform.position.z - zSpeed * Time.deltaTime;
+
+        // Actualizar la posiciÃ³n suavemente
+        Vector3 targetPosition = new Vector3(x, y, z);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smoothness);
+    }
+    void OnEnable()
+    {
+        // LÃ³gica que se ejecuta al habilitar el componente
+        Debug.Log("InfinityMovement activado");
+    }
+
+    void OnDisable()
+    {
+        // LÃ³gica que se ejecuta al deshabilitar el componente
+        Debug.Log("InfinityMovement desactivado");
+    }
+}
+
