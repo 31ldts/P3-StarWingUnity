@@ -4,7 +4,7 @@ public class Projectile : MonoBehaviour
 {
     public bool isPlayerProjectile;
 
-    public float damageAmount = 10f; // Cantidad de daño que causa el impacto de un proyectil
+    public float damageAmount = 10f; // Cantidad de daï¿½o que causa el impacto de un proyectil
 
     /*private void OnTriggerEnter(Collider other)
     {
@@ -14,7 +14,7 @@ public class Projectile : MonoBehaviour
             case true:
                if (!(other.gameObject.tag == "Player"))
                 {
-                    // Si es enemigo, hacemos daño (pendiente)
+                    // Si es enemigo, hacemos daï¿½o (pendiente)
                     Destroy(gameObject);
                 }
                 break;
@@ -22,7 +22,7 @@ public class Projectile : MonoBehaviour
             case false:
                 if (!(other.gameObject.tag == "Enemy"))
                 {
-                    // Si es jugador, hacemos daño (pendiente)
+                    // Si es jugador, hacemos daï¿½o (pendiente)
                     Destroy(gameObject);
                 }
                 break;
@@ -31,27 +31,27 @@ public class Projectile : MonoBehaviour
         }
     }*/
 
-    void Update()
+    void Start()
     {
-        // Destruir el objeto después del tiempo especificado
+        // Destruir el objeto despuï¿½s del tiempo especificado
         Destroy(gameObject, 5f);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Opcional: Comprobamos contra qué ha colisionado el proyectil
-        //Debug.Log($"Projectil ha col·lisionat amb: {collision.gameObject.name}");
+        // Opcional: Comprobamos contra quï¿½ ha colisionado el proyectil
+        //Debug.Log($"Projectil ha colï¿½lisionat amb: {collision.gameObject.name}");
 
         // Obtiene el componente LifeComponent del objeto con el que colisionamos
         LifeComponent life = collision.gameObject.GetComponent<LifeComponent>();
 
-        // Si el objeto tiene un LifeComponent, aplica el daño
+        // Si el objeto tiene un LifeComponent, aplica el daï¿½o
         if ( life != null )
         {
             life.doDamage(damageAmount);
         }
 
-        // Destruimos el proyectil en el momento de la colisión
+        // Destruimos el proyectil en el momento de la colisiï¿½n
         Destroy(gameObject);
     }
 }

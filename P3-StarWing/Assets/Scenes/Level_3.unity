@@ -3614,6 +3614,10 @@ PrefabInstance:
       propertyPath: lifeComponent
       value: 
       objectReference: {fileID: 1599360639}
+    - target: {fileID: 10744537527084283, guid: 2ac3bf79e4e6db197917f74af97b4afd, type: 3}
+      propertyPath: m_text
+      value: gorgon the destroyer
+      objectReference: {fileID: 0}
     - target: {fileID: 2754802974762571630, guid: 2ac3bf79e4e6db197917f74af97b4afd, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -3692,6 +3696,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2754802974762571630, guid: 2ac3bf79e4e6db197917f74af97b4afd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426941071914977673, guid: 2ac3bf79e4e6db197917f74af97b4afd, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6229963940267803186, guid: 2ac3bf79e4e6db197917f74af97b4afd, type: 3}

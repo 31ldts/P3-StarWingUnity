@@ -107,6 +107,7 @@ public class LifeComponent : MonoBehaviour
         if (explosionEffect != null)
         {
             GameObject explosion = Instantiate(explosionEffect, transform.position, transform.rotation);
+            Destroy(explosion, 5f);
         }
 
         if (gameObject.CompareTag("Boss"))
