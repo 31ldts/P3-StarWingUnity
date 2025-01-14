@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
+using System.Collections.Generic;
 
 public class OpenDoor : MonoBehaviour
 {
-    public GameObject[] enemies; // Array que contindr� tots els objectes classificats com a enemics
-    public GameObject[] rings;
+    private List<GameObject> expObjects;    // Lista que contendrá todos los objetos cargados en la escena que aporten experiencia
+    private List<string> expTags;    // Lista de tags de los objetos expObjects
 
     public Transform comportaEsquerra;
     public Transform comportaDreta;
@@ -16,54 +18,43 @@ public class OpenDoor : MonoBehaviour
     private Vector3 posicioInicialDreta;
 
     private float numTriggers = 0f;
-    private ExperienceLogic experienceLogic;
     [SerializeField] private LifeComponent lifeComponent;
 
-    private GameObject boss;
-    private BossLogic bossLogic;
-
-    //private bool obrint = false; // Controla si la porta s'ha d'obrir
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         posicioInicialEsquerra = comportaEsquerra.position;
         posicioInicialDreta = comportaDreta.position;
 
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        rings = GameObject.FindGameObjectsWithTag("Ring");
+        expObjects = new List<GameObject>();
+        expTags = new List<string>();
 
-        experienceLogic = Object.FindFirstObjectByType<ExperienceLogic>();
+        expTags.Add("Enemy");
+        expTags.Add("Ring");
+
+        foreach (GameObject obj in FindObjectsByType<GameObject>(FindObjectsSortMode.None))
+        {
+            if (expTags.Contains(obj.tag)){
+                expObjects.Add(obj);
+            }
+        }
+
         lifeComponent = GameObject.FindGameObjectWithTag("Player").GetComponent<LifeComponent>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // if (obrint)
-        if (AllEnemiesDead() && AllRingsDead()) {
+        // Abrir las puestas solo cuando se haya obtenido toda la experiencia posible
+        if (NoExpObjects()) {
             ObrirPorta();
         }
         
     }
 
-    private bool AllEnemiesDead()
+    private bool NoExpObjects()
     {
-        foreach (GameObject enemy in enemies)
+        foreach (GameObject obj in expObjects)
         {
-            if (enemy != null)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private bool AllRingsDead()
-    {
-        foreach (GameObject ring in rings)
-        {
-            if (ring != null)
+            if (obj != null)
             {
                 return false;
             }
@@ -91,29 +82,24 @@ public class OpenDoor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
         if (other.CompareTag("Player"))
         {
-            Debug.Log("He entrado en el trigger!");
             numTriggers++;
-            Debug.Log(numTriggers);
             if (numTriggers == 2)
             {
+                Scene currentScene = SceneManager.GetActiveScene();
                 if (currentScene.name == "Level_3")
                 {
-                    Debug.Log("ESTIC AL NIVELL 3!");
+                    // Script que controla la logiaca del Boss
                     BossLogic bossLogic = Resources.FindObjectsOfTypeAll<BossLogic>()[0];
                     bossLogic.ActiveBoss(true);
                 } else {
                     CanvasHandler.DeactivateCanvas("Completed");
-                    // Pasamos de nivel
-                    CanvasHandler.ActivateCanvas("Completed");
+                    CanvasHandler.ActivateCanvas("Completed");  // Pasamos de nivel
                 }
             }
-            else if ((numTriggers == 1) && (experienceLogic.getTotalExperience() < 1.0f))
+            else if (numTriggers == 1 && !NoExpObjects())
             {
-                Debug.Log(experienceLogic.getTotalExperience());
-                Debug.Log("Estoy en el segundo if!");
                 lifeComponent.PlayerDied(false);
                 numTriggers = 0;
             }
