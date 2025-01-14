@@ -48,8 +48,11 @@ public class LifeComponent : MonoBehaviour
     {
         Debug.Log(collision.gameObject.name);
 
-         
-        if (!collision.gameObject.CompareTag("Projectile"))
+        if (gameObject.CompareTag("Ring")) {
+            if (collision.gameObject.CompareTag("Player")) {
+                doDamage(currentHealth);
+            }
+        }else if (!collision.gameObject.CompareTag("Projectile") && !collision.gameObject.CompareTag("Ring"))
         {
             if (collision.gameObject.CompareTag("Asteroid"))
             {
@@ -83,7 +86,7 @@ public class LifeComponent : MonoBehaviour
         // Aplica daño o curación y restringe el resultado entre el valor mínimo y máximo
         currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
 
-        if (gameObject.CompareTag("Enemy") || gameObject.CompareTag("Asteroid") || gameObject.CompareTag("Boss")) {
+        if (gameObject.CompareTag("Enemy") || gameObject.CompareTag("Asteroid") || gameObject.CompareTag("Boss") || gameObject.CompareTag("Ring")) {
             experienceLogic.AddExperience(amount);
         }
 

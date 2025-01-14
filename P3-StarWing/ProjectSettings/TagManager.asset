@@ -15,6 +15,7 @@ TagManager:
   - Boss
   - BossDefeat
   - LastLevel
+  - Ring
   layers:
   - Default
   - TransparentFX

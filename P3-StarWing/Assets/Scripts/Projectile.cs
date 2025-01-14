@@ -41,17 +41,17 @@ public class Projectile : MonoBehaviour
     {
         // Opcional: Comprobamos contra qu� ha colisionado el proyectil
         //Debug.Log($"Projectil ha col�lisionat amb: {collision.gameObject.name}");
+        if (!collision.gameObject.CompareTag("Ring")) {
+            // Obtiene el componente LifeComponent del objeto con el que colisionamos
+            LifeComponent life = collision.gameObject.GetComponent<LifeComponent>();
 
-        // Obtiene el componente LifeComponent del objeto con el que colisionamos
-        LifeComponent life = collision.gameObject.GetComponent<LifeComponent>();
-
-        // Si el objeto tiene un LifeComponent, aplica el da�o
-        if ( life != null )
-        {
-            life.doDamage(damageAmount);
+            // Si el objeto tiene un LifeComponent, aplica el da�o
+            if ( life != null )
+            {
+                life.doDamage(damageAmount);
+            }            
         }
-
         // Destruimos el proyectil en el momento de la colisi�n
-        Destroy(gameObject);
+            Destroy(gameObject);
     }
 }

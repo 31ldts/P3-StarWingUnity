@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class OpenDoor : MonoBehaviour
 {
     public GameObject[] enemies; // Array que contindr� tots els objectes classificats com a enemics
+    public GameObject[] rings;
 
     public Transform comportaEsquerra;
     public Transform comportaDreta;
@@ -30,6 +31,7 @@ public class OpenDoor : MonoBehaviour
         posicioInicialDreta = comportaDreta.position;
 
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        rings = GameObject.FindGameObjectsWithTag("Ring");
 
         experienceLogic = Object.FindFirstObjectByType<ExperienceLogic>();
         lifeComponent = GameObject.FindGameObjectWithTag("Player").GetComponent<LifeComponent>();
@@ -39,7 +41,7 @@ public class OpenDoor : MonoBehaviour
     void Update()
     {
         // if (obrint)
-        if (AllEnemiesDead()) {
+        if (AllEnemiesDead() && AllRingsDead()) {
             ObrirPorta();
         }
         
@@ -50,6 +52,18 @@ public class OpenDoor : MonoBehaviour
         foreach (GameObject enemy in enemies)
         {
             if (enemy != null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private bool AllRingsDead()
+    {
+        foreach (GameObject ring in rings)
+        {
+            if (ring != null)
             {
                 return false;
             }
