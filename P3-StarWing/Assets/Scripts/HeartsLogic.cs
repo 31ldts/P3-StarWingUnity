@@ -4,13 +4,13 @@ using UnityEngine.UI;
 public class HeartsLogic : MonoBehaviour
 {
     [SerializeField] private Image[] heartImages;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
         // Validar asignaciones
         if (heartImages == null || heartImages.Length != 3)
         {
-            Debug.LogError("Error: Debes asignar exactamente 3 imágenes.");
+            //Debug.LogError("Error: Debes asignar exactamente 3 imágenes.");
             return;
         }
         

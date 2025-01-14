@@ -39,7 +39,7 @@ public class EnemyPatrolArea : MonoBehaviour
     {
         // Establir la nova posició de target segons el moviment en línia recta dins l'àrea
         float targetX = moveDirection.x > 0 ? areaCenter.x + areaSize.x / 2 : areaCenter.x - areaSize.x / 2;
-        float targetZ = areaCenter.z; // Fer que l'enemic es desplaci només en X (també podries fer-ho en Z si vols un altre eix)
+        float targetZ = areaCenter.z; // Fer que l'enemic es desplaci només en l'eix X
         targetPosition = new Vector3(targetX, transform.position.y, targetZ);
     }
 
@@ -54,7 +54,7 @@ public class EnemyPatrolArea : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        // Dibuixar l'àrea de patrullatge al editor
+        // Dibuixa l'àrea de patrullatge al editor
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(areaCenter, areaSize);
     }

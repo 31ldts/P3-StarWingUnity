@@ -7,14 +7,12 @@ public class Bomb : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Gestionar danys o efectes d'explosió
-        Debug.Log($"Bomba col·lisiona amb {collision.gameObject.name}");
+        // Debug.Log($"Bomba col·lisiona amb {collision.gameObject.name}");
 
-        // Cercar objectes dins del radi d'explosió
+        // Cerquem objectes dins del radi d'explosió
         Collider[] hits = Physics.OverlapSphere(transform.position, radi);
         foreach (Collider hit in hits)
         {
-            //Debug.Log(hit.name);
             LifeComponent life = hit.GetComponent<LifeComponent>();
             if (life != null)
             {
@@ -22,7 +20,7 @@ public class Bomb : MonoBehaviour
             }
         }
 
-        // Destruir després de l'impacte
+        // Destruim després de l'impacte
         Destroy(gameObject);
     }
 

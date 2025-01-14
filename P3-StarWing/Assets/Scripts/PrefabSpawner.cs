@@ -72,7 +72,6 @@ public class PrefabSpawner : MonoBehaviour
                 Destroy(asteroid);
             }
             Scene currentScene = SceneManager.GetActiveScene();
-            Debug.Log(currentScene.name);
             CanvasHandler.ActivateCanvas("Completed");
         }
     }

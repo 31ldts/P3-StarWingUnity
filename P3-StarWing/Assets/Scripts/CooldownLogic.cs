@@ -18,7 +18,7 @@ public class CooldownLogic : MonoBehaviour
         // Validar asignaciones
         if (cooldownBar == null || boostImages == null || boostImages.Length != 3)
         {
-            Debug.LogError("Error: Debes asignar exactamente 3 imágenes y una barra de cooldown.");
+            //Debug.LogError("Error: Debes asignar exactamente 3 imágenes y una barra de cooldown.");
             return;
         }
 

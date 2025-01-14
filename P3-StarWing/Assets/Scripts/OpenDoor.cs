@@ -90,7 +90,7 @@ public class OpenDoor : MonoBehaviour
                 Scene currentScene = SceneManager.GetActiveScene();
                 if (currentScene.name == "Level_3")
                 {
-                    // Script que controla la logiaca del Boss
+                    // Script que controla la logica del Boss
                     BossLogic bossLogic = Resources.FindObjectsOfTypeAll<BossLogic>()[0];
                     bossLogic.ActiveBoss(true);
                 } else {

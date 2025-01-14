@@ -14,7 +14,7 @@ public class ArmwingReplacer : MonoBehaviour
 
         if (armwingTransform == null)
         {
-            Debug.LogError("No se encontró el objeto 'armwing' dentro de 'Player'.");
+            //Debug.LogError("No se encontró el objeto 'armwing' dentro de 'Player'.");
             return;
         }
 
@@ -32,7 +32,7 @@ public class ArmwingReplacer : MonoBehaviour
 
         if (newModel == null)
         {
-            Debug.Log($"No se reemplazó 'armwing', se mantiene el objeto original o no se encontró el modelo para '{shipName}'.");
+            //Debug.Log($"No se reemplazó 'armwing', se mantiene el objeto original o no se encontró el modelo para '{shipName}'.");
             return;
         }
 
@@ -45,6 +45,6 @@ public class ArmwingReplacer : MonoBehaviour
         instantiatedModel.transform.localRotation = Quaternion.identity; // Rotación (0, 0, 0)
         instantiatedModel.transform.localScale = Vector3.one; // Escala (1, 1, 1)
 
-        Debug.Log($"Se reemplazó 'armwing' por '{shipName}' con valores de transform reseteados.");
+        //Debug.Log($"Se reemplazó 'armwing' por '{shipName}' con valores de transform reseteados.");
     }
 }

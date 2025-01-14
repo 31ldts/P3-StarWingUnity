@@ -8,13 +8,9 @@ public class BossLogic : MonoBehaviour
     public float moveSpeed; //Moviment XY
     public float lookSpeed = 5f;
     private PlayerGameplay playerGameplay; // Referencia al script PlayerGameplay
-
     private InfinityMovement infinityMovement;
 
-
-
-    // RAIG DESRTRUCTOR
-
+    // RAIG DESTRUCTOR
     public AudioSource beamAudioSource; // Referencia al AudioSource del rayo
     public Transform player;
     public float detectionRange = 100f;
@@ -27,13 +23,8 @@ public class BossLogic : MonoBehaviour
     public float aimOffset = 1f;
     private float timer = 0f; // Acumulador de tiempo
 
-    //public LayerMask damageLayer;       // Capes que poden rebre dany
-
     private float nextFireTime;
     private bool isFiring;
-    private Vector3 targetPosition;  // Posici� objectiu del moviment
-
-    private Vector3 targetRandom;  // Posici� objectiu del moviment
 
 
     void Start()
@@ -42,7 +33,7 @@ public class BossLogic : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
-        lineRenderer.enabled = false; // Assegura que el raig est� desactivat inicialment
+        lineRenderer.enabled = false; // Assegura que el raig esta desactivat inicialment
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
         // Obtén el componente PlayerGameplay del jugador
@@ -50,10 +41,10 @@ public class BossLogic : MonoBehaviour
         {
             playerGameplay = player.GetComponent<PlayerGameplay>();
         }
+
         InfinityMovement infinityMovement = GetComponent<InfinityMovement>();
         if (infinityMovement == null)
         {
-            Debug.Log("q es esto");
             infinityMovement = gameObject.AddComponent<InfinityMovement>();
         }
         if (beamAudioSource == null)
@@ -78,20 +69,18 @@ public class BossLogic : MonoBehaviour
     {
             // Accede al componente infinityMovement en el Update
         infinityMovement = GetComponent<InfinityMovement>();
-        movementSpeed = playerGameplay.movementSpeed+1;   //Sadapta a la velocitat del player
+        movementSpeed = playerGameplay.movementSpeed+1;   //S'adapta a la velocitat del player
         infinityMovement.zSpeed = movementSpeed;
         
         // Acumular el tiempo transcurrido
         timer += Time.deltaTime;
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        //MoveTowardsPosition();
 
         if (distanceToPlayer < detectionRange)
         {
             // Seguiment del jugador
             LookAtPlayer();
-            
-
+           
             if (timer >= 4)     //Cada 4 segons moverse en infinito XY
             {
                 infinityMovement.enabled = true;
@@ -100,22 +89,18 @@ public class BossLogic : MonoBehaviour
                     timer = 0;
                 } 
             } else {
-                Debug.Log("memue");
                 MoveAwayFromPlayer();
             }
             
-
             // Atac
             if (Time.time >= nextFireTime && !isFiring)
             {
-                Debug.Log("DISPARO DELIBRO SOCIO");
                 StartCoroutine(FireBeam());
             }
         }
     }
     public void ActiveBoss(bool active)
     {
-        Debug.Log("YEEEE");
         gameObject.SetActive(active);
     }
 
@@ -149,7 +134,7 @@ public class BossLogic : MonoBehaviour
         // Activar el raig
         lineRenderer.enabled = true;
 
-        // Duraci� activa del raig
+        // Duracio activa del raig
         float elapsedTime = 0f;
 
         while (elapsedTime < beamDuration)
@@ -157,17 +142,17 @@ public class BossLogic : MonoBehaviour
             // Configurar el LineRenderer per mostrar el raig
             lineRenderer.SetPosition(0, transform.position); // Inici del raig
 
-            // Crear una posici� amb lleugera desviaci�
+            // Crear una posicio amb lleugera desviacio
             Vector3 targetPosition = player.position + new Vector3(
                 Random.Range(-aimOffset, aimOffset),
                 Random.Range(-aimOffset, aimOffset),
                 Random.Range(-aimOffset, aimOffset)
             );
 
-            lineRenderer.SetPosition(1, targetPosition); // Direcci� lleugerament despla�ada cap al jugador
+            lineRenderer.SetPosition(1, targetPosition); // Direccio lleugerament desplasada cap al jugador
 
             // Aplica dany al jugador si el raig el colpeja
-            if (Physics.Raycast(transform.position, (targetPosition - transform.position).normalized, out RaycastHit hit, Mathf.Infinity)) //, damageLayer))
+            if (Physics.Raycast(transform.position, (targetPosition - transform.position).normalized, out RaycastHit hit, Mathf.Infinity))
             {
                 LifeComponent lifeComponent = hit.collider.GetComponent<LifeComponent>();
                 if (lifeComponent != null)
@@ -177,9 +162,8 @@ public class BossLogic : MonoBehaviour
             }
 
             elapsedTime += beamTrackingDelay;
-            yield return new WaitForSeconds(beamTrackingDelay); // Fes un seguiment retardat
+            yield return new WaitForSeconds(beamTrackingDelay); // Es fa un seguiment retardat
         }
-
 
         // Desactiva el raig
         lineRenderer.enabled = false;
@@ -216,16 +200,17 @@ public class InfinityMovement : MonoBehaviour
         Vector3 targetPosition = new Vector3(x, y, z);
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smoothness);
     }
-    void OnEnable()
+
+    /*void OnEnable()
     {
         // Lógica que se ejecuta al habilitar el componente
         Debug.Log("InfinityMovement activado");
-    }
+    }*/
 
-    void OnDisable()
+    /*void OnDisable()
     {
         // Lógica que se ejecuta al deshabilitar el componente
         Debug.Log("InfinityMovement desactivado");
-    }
+    }*/
 }
 

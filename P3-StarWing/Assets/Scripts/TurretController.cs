@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class TurretController : MonoBehaviour
 {
-    public Transform player; // Refer�ncia a la nau del jugador
+    public Transform player; // Referencia a la nau del jugador
 
-    public float detectionRange = 50f; // Dist�ncia m�xima per detectar el jugador
-    public float rotationSpeed = 15f; // Velocitat de rotaci� de la torreta
+    public float detectionRange = 50f; // Distancia maxima per detectar el jugador
+    public float rotationSpeed = 15f; // Velocitat de rotacio de la torreta
     public float fireRate = 1f; // Velocitat de dispar dels projectils (un cada X segons)
     private float fireCooldown = 0.5f; // Temporitzador de dispar
 
@@ -21,10 +21,10 @@ public class TurretController : MonoBehaviour
     {
         if (player != null)
         {
-            // Calcula la dist�ncia al jugador
+            // Calcula la distancia al jugador
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-            // Comprova si el jugador �s dins del rang establert i davant la torreta
+            // Comprova si el jugador es dins del rang establert i davant la torreta
             if (distanceToPlayer <= detectionRange && player.position.z < transform.position.z)
             {
                 // Fer que la torreta apunti cap a la nau
@@ -47,7 +47,7 @@ public class TurretController : MonoBehaviour
     {
         Gizmos.color = Color.red;
 
-        // Dibuixa un cercle representant el rang de detecci�
+        // Dibuixa un cercle representant el rang de deteccio
         Gizmos.DrawWireSphere(transform.position, detectionRange);
     }
 }

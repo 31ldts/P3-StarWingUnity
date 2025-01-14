@@ -46,8 +46,6 @@ public class LifeComponent : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.name);
-
         if (gameObject.CompareTag("Ring")) {
             if (collision.gameObject.CompareTag("Player")) {
                 doDamage(currentHealth);
@@ -102,7 +100,6 @@ public class LifeComponent : MonoBehaviour
             }
             else
             {
-                Debug.Log("Enemy has died.");
                 Die();
             }
         }
@@ -167,7 +164,7 @@ public class LifeComponent : MonoBehaviour
     {
         gameObject.transform.position = new Vector3(0, 8, 0);
         gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
-        Debug.Log("Player restarted.");
+        //Debug.Log("Player restarted.");
         currentHealth = maxHealth;
     }
 

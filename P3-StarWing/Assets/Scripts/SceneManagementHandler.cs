@@ -22,17 +22,13 @@ public class SceneManagementHandler : MonoBehaviour
 
         canvas = GetComponentInParent<Canvas>();
         lifeComponent = player.GetComponent<LifeComponent>();
-
-        Debug.Log($"Current Scene: {currentScene.name}");
-        Debug.Log($"Canvas: {canvas.name}");
-        Debug.Log(canvas.CompareTag("Completed"));
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            Debug.Log("Tecla Enter pulsada.");
+            //Debug.Log("Tecla Enter pulsada.");
             if (canvas.CompareTag("NoCompleted"))
             {
                 lifeComponent.RestartPlayer();
@@ -42,7 +38,6 @@ public class SceneManagementHandler : MonoBehaviour
                 MenuScene(gameObject);
             } else if (canvas.CompareTag("Completed"))
             {
-                Debug.Log("COMPLETAT!");
                 if (currentScene.name == lvl1)
                 {
                     CompleteLevel(1);
@@ -87,13 +82,12 @@ public class SceneManagementHandler : MonoBehaviour
         GameData.ShipName = shipName;
 
         // Imprimir el nivel y el nombre de la nave en la consola
-        Debug.Log($"Cambiando a la escena con índice {levelIndex} y nave {shipName}");
+        // Debug.Log($"Cambiando a la escena con índice {levelIndex} y nave {shipName}");
 
         // Desactivar y eliminar el objeto invocador
         if (invoker != null)
         {
             Destroy(invoker);
-            Debug.Log("Objeto invocador eliminado.");
         }
 
         // Eliminar la escena actual
@@ -122,7 +116,6 @@ public class SceneManagementHandler : MonoBehaviour
         if (invoker != null)
         {
             Destroy(invoker);
-            Debug.Log("Objeto invocador eliminado.");
         }
 
         // Eliminar la escena actual

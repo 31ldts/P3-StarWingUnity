@@ -67,7 +67,7 @@ public class RawImageManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha0 + i) && imageConfig[i-1] != 0)
             {
-                Debug.Log($"Tecla {i} pulsada.");
+                //Debug.Log($"Tecla {i} pulsada.");
                 levelIndex = i;
                 UpdateImages(imageConfig);
                 ChangeImage(i - 1, textures.Count - 1); // Cambia al siguiente índice circularmente
@@ -75,7 +75,7 @@ public class RawImageManager : MonoBehaviour
                 if (actionButton != null && !actionButton.interactable)
                 {
                     actionButton.interactable = true;
-                    Debug.Log("Botón habilitado.");
+                    //Debug.Log("Botón habilitado.");
                 }
             }
         }
@@ -83,7 +83,7 @@ public class RawImageManager : MonoBehaviour
         // Detectar flecha izquierda
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            Debug.Log("Flecha izquierda pulsada");
+            //Debug.Log("Flecha izquierda pulsada");
             if (shipImage != null && shipTextures != null)
             {
                 shipTextureIndex = shipTextureIndex != 0 ? (shipTextureIndex - 1) : (shipTextures.Count - 1);
@@ -99,7 +99,7 @@ public class RawImageManager : MonoBehaviour
         // Detectar flecha derecha
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            Debug.Log("Flecha derecha pulsada");
+            //Debug.Log("Flecha derecha pulsada");
             if (shipImage != null && shipTextures != null)
             {
                 shipTextureIndex = (shipTextureIndex + 1) % shipTextures.Count;
@@ -121,7 +121,7 @@ public class RawImageManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Tecla Enter pulsada.\nLevel: " + levelIndex + "\nShip: " + shipName);
+                //Debug.Log("Tecla Enter pulsada.\nLevel: " + levelIndex + "\nShip: " + shipName);
                 SceneManagementHandler.ChangeScene(gameObject, levelIndex, shipName);
             }
         }
@@ -169,7 +169,7 @@ public class RawImageManager : MonoBehaviour
             if (i < config.Count && config[i] >= 0 && config[i] < textures.Count)
             {
                 rawImages[i].texture = textures[config[i]];
-                Debug.Log($"Imagen {i + 1} actualizada a la textura {config[i]}.");
+                //Debug.Log($"Imagen {i + 1} actualizada a la textura {config[i]}.");
             }
             else
             {
@@ -184,7 +184,7 @@ public class RawImageManager : MonoBehaviour
         if (index >= 0 && index < rawImages.Length && newTextureIndex >= 0 && newTextureIndex < textures.Count)
         {
             rawImages[index].texture = textures[newTextureIndex];
-            Debug.Log($"Imagen {index + 1} cambiada a la textura {newTextureIndex}.");
+            //Debug.Log($"Imagen {index + 1} cambiada a la textura {newTextureIndex}.");
         }
         else
         {

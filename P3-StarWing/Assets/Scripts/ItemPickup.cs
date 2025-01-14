@@ -13,7 +13,7 @@ public class ItemPickup : MonoBehaviour
                 player.SetDoubleShotMode(true);
                 Debug.Log("Mode de dispar doble activat!");
 
-                // Destruir l'objecte item
+                // Destruim l'objecte item
                 Destroy(gameObject);
             }
         }
