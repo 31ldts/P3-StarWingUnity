@@ -13,6 +13,11 @@ public class LifeComponent : MonoBehaviour
     private HeartsLogic heartsLogic;
     private ExperienceLogic experienceLogic;
 
+    // Boss explotions data
+    private int numExplosions = 30;
+    private float positionVariance = 20f;
+    private float rotationVariance = 10f;
+
     void Start()
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
@@ -106,8 +111,23 @@ public class LifeComponent : MonoBehaviour
 
         if (explosionEffect != null)
         {
-            GameObject explosion = Instantiate(explosionEffect, transform.position, transform.rotation);
-            Destroy(explosion, 5f);
+            if (gameObject.CompareTag("Boss"))
+            {
+                // Spawn boss explosions
+                for (int i = 0; i < numExplosions; i++)
+                {
+                    Vector3 randomPosition = transform.position + new Vector3(Random.Range(-positionVariance, positionVariance), Random.Range(-positionVariance, positionVariance), 0);
+                    Quaternion randomRotation = transform.rotation * Quaternion.Euler(0, 0, Random.Range(-rotationVariance, rotationVariance));
+                    GameObject explosion = Instantiate(explosionEffect, randomPosition, randomRotation);
+                    Destroy(explosion, 5f);
+                }
+            }
+            else
+            {
+                // Spawn player explosions
+                GameObject explosion = Instantiate(explosionEffect, transform.position, transform.rotation);
+                Destroy(explosion, 5f);
+            }
         }
 
         if (gameObject.CompareTag("Boss"))
