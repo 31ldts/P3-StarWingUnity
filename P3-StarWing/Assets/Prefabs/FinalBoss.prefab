@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6706613169750590266}
   m_Layer: 0
   m_Name: FinalBoss
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,10 +49,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2751d92e1daafd342a3258c754e9027b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  finalBoss: {fileID: 0}
   areaCenter: {fileID: 235114424360186477}
   movementRadius: 5
   movementSpeed: 2
+  lookSpeed: 5
   player: {fileID: 0}
+  detectionRange: 100
   lineRenderer: {fileID: 6706613169750590266}
   beamDuration: 1.5
   beamCooldown: 2

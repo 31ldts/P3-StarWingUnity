@@ -1,12 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public class FinalBoss : MonoBehaviour
+public class BossLogic : MonoBehaviour
 {
-    // MOVIMENT
-    public Transform areaCenter;  
-    public float movementRadius = 5f;
-    public float movementSpeed = 2f;
+    // MOVIMENT 
+    public float movementSpeed = 8f;
     public float lookSpeed = 5f;
 
     // RAIG DESRTRUCTOR
@@ -15,7 +13,7 @@ public class FinalBoss : MonoBehaviour
     public LineRenderer lineRenderer;   // LineRenderer que simula el raig
     public float beamDuration = 1.5f;   // Durada del raig (en segons)
     public float beamCooldown = 2f;     // Temps entre rajos
-    public float beamDamage = 10f;      // Quantitat de dany que infligeix el raig
+    public float beamDamage = 100f;      // Quantitat de dany que infligeix el raig
 
     public float beamTrackingDelay = 0.1f; // Temps entre actualitzacions del seguiment del raig
     public float aimOffset = 1f;
@@ -27,9 +25,12 @@ public class FinalBoss : MonoBehaviour
     private Vector3 targetPosition;  // Posició objectiu del moviment
 
     void Start()
-    {
+    { 
+        if (gameObject != null)
+        {
+            gameObject.SetActive(false);
+        }
         lineRenderer.enabled = false; // Assegura que el raig està desactivat inicialment
-        AssignNewTargetPosition();
     }
 
     void Update()
@@ -41,6 +42,8 @@ public class FinalBoss : MonoBehaviour
         {
             // Seguiment del jugador
             LookAtPlayer();
+            MoveAwayFromPlayer();
+
             // Atac
             if (Time.time >= nextFireTime && !isFiring)
             {
@@ -49,23 +52,31 @@ public class FinalBoss : MonoBehaviour
         }
     }
 
-    private void MoveTowardsPosition()
+    public void ActiveBoss(bool active)
     {
-        // Mou cap a la posició objectiu
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
-
-        // Assigna una nova posició si ha arribat al punt objectiu
-        if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
-        {
-            AssignNewTargetPosition();
-        }
+        Debug.Log("YEEEE");
+        gameObject.SetActive(active);
     }
 
-    private void AssignNewTargetPosition()
+    private void MoveAwayFromPlayer()
     {
-        // Genera una nova posició dins del radi
-        Vector2 randomOffset = Random.insideUnitCircle * movementRadius;
-        targetPosition = areaCenter.position + new Vector3(randomOffset.x, 0, randomOffset.y);
+        // Direcció cap al jugador
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+
+        // Direcció contrària (cap enrere)
+        Vector3 retreatDirection = -directionToPlayer;
+
+        // Moviment irregular al voltant de la direcció de retirada
+        Vector3 randomOffset = new Vector3(
+            Random.Range(0f, 4f),
+            Random.Range(0f, 2f), // Opcional, per si vols que el moviment vertical sigui menor
+            Random.Range(0f, 4f)
+        ).normalized;
+
+        Vector3 finalDirection = (retreatDirection + randomOffset).normalized;
+
+        // Mou el boss
+        transform.position += finalDirection * movementSpeed * Time.deltaTime;
     }
 
     private void LookAtPlayer()

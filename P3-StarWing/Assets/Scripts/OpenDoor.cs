@@ -18,6 +18,9 @@ public class OpenDoor : MonoBehaviour
     private ExperienceLogic experienceLogic;
     [SerializeField] private LifeComponent lifeComponent;
 
+    private GameObject boss;
+    private BossLogic bossLogic;
+
     //private bool obrint = false; // Controla si la porta s'ha d'obrir
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -74,18 +77,24 @@ public class OpenDoor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-       if (other.CompareTag("Player"))
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (other.CompareTag("Player"))
         {
             Debug.Log("He entrado en el trigger!");
             numTriggers++;
             Debug.Log(numTriggers);
             if (numTriggers == 2)
             {
-                CanvasHandler.DeactivateCanvas("Completed");
-                // Pasamos de nivel
-                Scene currentScene = SceneManager.GetActiveScene();
-                Debug.Log(currentScene.name);
-                CanvasHandler.ActivateCanvas("Completed");
+                if (currentScene.name == "Level_3")
+                {
+                    Debug.Log("ESTIC AL NIVELL 3!");
+                    BossLogic bossLogic = Resources.FindObjectsOfTypeAll<BossLogic>()[0];
+                    bossLogic.ActiveBoss(true);
+                } else {
+                    CanvasHandler.DeactivateCanvas("Completed");
+                    // Pasamos de nivel
+                    CanvasHandler.ActivateCanvas("Completed");
+                }
             }
             else if ((numTriggers == 1) && (experienceLogic.getTotalExperience() < 1.0f))
             {
