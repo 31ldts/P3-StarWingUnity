@@ -109,6 +109,11 @@ public class LifeComponent : MonoBehaviour
             GameObject explosion = Instantiate(explosionEffect, transform.position, transform.rotation);
         }
 
+        if (gameObject.CompareTag("Boss"))
+        {
+            CanvasHandler.ActivateCanvas("BossDefeat");
+        }
+
         Destroy(gameObject);
     }
 

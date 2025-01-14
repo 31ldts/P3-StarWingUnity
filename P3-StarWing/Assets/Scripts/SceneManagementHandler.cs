@@ -11,6 +11,8 @@ public class SceneManagementHandler : MonoBehaviour
     private static string lvl2 = "Level_2";
     private static string lvl3 = "Level_3";
 
+    private static int maxLevel = 3;
+
     static Scene currentScene;
 
     void Start()
@@ -51,6 +53,10 @@ public class SceneManagementHandler : MonoBehaviour
                     CompleteLevel(2);
                     SceneManager.LoadScene(lvl3);
                 }
+            } else if (canvas.CompareTag("BossDefeat"))
+            {
+                CompleteLevel(3);
+                SceneManager.LoadScene("Menu");
             }
         }
     }
@@ -67,7 +73,7 @@ public class SceneManagementHandler : MonoBehaviour
             lines[levelIndex] = "4";
         }
 
-        if (levelIndex + 1 < lines.Length)
+        if (levelIndex + 1 < lines.Length && levelIndex + 1 < maxLevel)
         {
             lines[levelIndex + 1] = "1";
         }
